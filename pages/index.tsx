@@ -1,13 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useGlobalContext } from '../context/Context';
-import styles from '../styles/Home.module.css';
+import Header from '../components/Header/Header';
 
 const Home: NextPage = () => {
-	const { clients } = useGlobalContext();
-
 	return (
-		<div className={styles.container}>
+		<div className="bg-gray-100">
 			<Head>
 				<title>Market place</title>
 				<meta
@@ -16,7 +13,7 @@ const Home: NextPage = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<p>{clients} </p>
+			<Header />
 		</div>
 	);
 };
