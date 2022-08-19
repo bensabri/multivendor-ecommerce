@@ -5,6 +5,7 @@ import Link from 'next/link';
 import InputSearchLarge from './InputSearchLarge';
 import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import InputSearchSmall from './InputSearchSmall';
+import { NavBarData } from './NavBarData';
 
 const Header: FC = () => {
 	const { activeTab, setActiveTab, productList } = useGlobalContext();
@@ -15,7 +16,7 @@ const Header: FC = () => {
 	};
 
 	return (
-		<header className="bg-headerLight">
+		<header className="bg-gray-900">
 			<div className="flex items-center p-1 flex-grow py-2">
 				<div className="mt-2 flex items-center flex-grow sm:flex-grow-0">
 					<Image
@@ -50,6 +51,18 @@ const Header: FC = () => {
 								Tous produits
 							</li>
 						</Link>
+						{NavBarData?.map((item, i) => (
+							<li
+								key={i}
+								// onClick={() => {
+								// 	setActiveCatogory(item.title);
+								// 	router.push('/category');
+								// }}
+								className="text-white cursor-pointer px-7 py-3 hover:bg-headerDefault"
+							>
+								{item.title}{' '}
+							</li>
+						))}
 					</ul>
 				</div>
 				<InputSearchLarge
@@ -81,10 +94,35 @@ const Header: FC = () => {
 					{/* Hover cart icon show the basket detail */}
 					{/* <CartDetailHeader /> */}
 				</div>
-				<InputSearchSmall
-					inputSearch={inputSearch}
-					setInputSearch={setInputSearch}
-				/>
+			</div>
+			<InputSearchSmall
+				inputSearch={inputSearch}
+				setInputSearch={setInputSearch}
+			/>
+			<div className="flex items-center space-x-3 p-3 pl-6  shadow-md text-white text-sm">
+				<p className="cursor-pointer hover:underline flex items-center">
+					<MenuIcon
+						onClick={handleClick}
+						className="h-6 mr-1 lg:hidden"
+					/>
+				</p>
+				<Link href={`/products/`} passHref>
+					<li className="text-white cursor-pointer hover:underline  hidden lg:inline-flex">
+						Tous produits
+					</li>
+				</Link>
+				{NavBarData?.map((item, i) => (
+					<li
+						// onClick={() => {
+						// 	setActiveCatogory(item.title);
+						// 	router.push('/category');
+						// }}
+						key={i}
+						className="cursor-pointer hover:underline hidden lg:inline-flex text-md"
+					>
+						{item.title}{' '}
+					</li>
+				))}
 			</div>
 		</header>
 	);
