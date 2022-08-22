@@ -5,7 +5,7 @@ type Props = {
 	children: ReactNode;
 };
 
-const AppContext = createContext<Partial<Icontext>>({});
+const AppContext = createContext({} as Icontext);
 
 const AppProvider = ({ children }: Props) => {
 	const [clients, setClients] = useState<string>('text');
