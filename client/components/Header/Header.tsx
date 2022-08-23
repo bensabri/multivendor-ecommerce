@@ -6,36 +6,10 @@ import InputSearchLarge from './InputSearchLarge';
 import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import InputSearchSmall from './InputSearchSmall';
 import { NavBarData } from './NavBarData';
-import { gql, useQuery } from '@apollo/client';
 
 const Header: FC = () => {
 	const { activeTab, setActiveTab, productList } = useGlobalContext();
 	const [inputSearch, setInputSearch] = useState<string>('');
-
-	const { data } = useQuery(gql`
-		query getClients($limit: Int, $email: String) {
-			clients(
-				pagination: { limit: $limit }
-				filters: { email: { eq: $email } }
-			) {
-				data {
-					id
-					attributes {
-						lastname
-						firstname
-						email
-						phone_number
-						billing_address {
-							address
-							zip_code
-							city
-							country
-						}
-					}
-				}
-			}
-		}
-	`);
 
 	const handleClick = () => {
 		setActiveTab(!activeTab);

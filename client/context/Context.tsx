@@ -1,4 +1,5 @@
-import { Icontext, IProductList } from '../@types/model';
+import { IProductList } from '../@types/model';
+import { Icontext } from '../@types/context';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 type Props = {
@@ -8,13 +9,10 @@ type Props = {
 const AppContext = createContext({} as Icontext);
 
 const AppProvider = ({ children }: Props) => {
-	const [clients, setClients] = useState<string>('text');
 	const [productList, setProductList] = useState<IProductList['product']>([]);
 	const [activeTab, setActiveTab] = useState<boolean>(false);
 
 	const contextValue: Icontext = {
-		clients,
-		setClients,
 		activeTab,
 		setActiveTab,
 		productList,
