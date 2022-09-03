@@ -1,15 +1,16 @@
 import '../styles/globals.css';
-import { ApolloProvider } from '@apollo/client';
+// import { ApolloProvider } from '@apollo/client';
 import type { AppProps } from 'next/app';
 import { AppProvider } from '../context/Context';
-import client from '../graphql/apollo-client';
+// import client from '../graphql/apollo-client';
+import StrapiApolloProvider from '../graphql/apollo-client';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<AppProvider>
-			<ApolloProvider client={client()}>
+			<StrapiApolloProvider>
 				<Component {...pageProps} />
-			</ApolloProvider>
+			</StrapiApolloProvider>
 		</AppProvider>
 	);
 }

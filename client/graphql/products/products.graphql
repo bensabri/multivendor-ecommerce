@@ -1,6 +1,9 @@
-query products {
-  products {
-    data {
+query getProducts($limit: Int, $contains: String) {
+				products(
+					pagination: { limit: $limit }
+					filters: { title: { contains: $contains } }
+				) {
+					data {
 						id
 						attributes {
 							title
@@ -17,5 +20,5 @@ query products {
 							}
 						}
 					}
-  }
-} 
+				}
+			}

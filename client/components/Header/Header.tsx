@@ -6,7 +6,9 @@ import InputSearchLarge from './InputSearchLarge';
 import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import InputSearchSmall from './InputSearchSmall';
 import { NavBarData } from './NavBarData';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql, useLazyQuery, useQuery } from '@apollo/client';
+import { GetProductsDocument, GetProductsQuery, GetProductsQueryVariables } from '../../generated';
+
 
 const Header: FC = () => {
 	const { activeTab, setActiveTab, productList } = useGlobalContext();
@@ -16,34 +18,8 @@ const Header: FC = () => {
 		setActiveTab(!activeTab);
 	};
 
-	const [searchProduct, { error, data }] = useLazyQuery(
-		gql`
-			query getProducts($limit: Int, $contains: String) {
-				products(
-					pagination: { limit: $limit }
-					filters: { title: { contains: $contains } }
-				) {
-					data {
-						id
-						attributes {
-							title
-							description
-							price
-							slug
-							category
-							image {
-								data {
-									attributes {
-										url
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		`
-	);
+	const [searchProduct,{ error, data }] = useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument);
+
  
 	return (
 		<header className="bg-gray-900">
@@ -96,6 +72,7 @@ const Header: FC = () => {
 					</ul>
 				</div>
 				<InputSearchLarge
+					data={data}
 					searchProduct={searchProduct}
 					inputSearch={inputSearch}
 					setInputSearch={setInputSearch}
