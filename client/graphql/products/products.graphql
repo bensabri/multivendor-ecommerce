@@ -1,0 +1,21 @@
+query products {
+  products {
+    data {
+						id
+						attributes {
+							title
+							description
+							price
+							slug
+							category
+							image {
+								data {
+									attributes {
+										url
+									}
+								}
+							}
+						}
+					}
+  }
+} 

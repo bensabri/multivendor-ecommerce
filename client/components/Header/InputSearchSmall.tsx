@@ -6,6 +6,8 @@ interface Iprops {
 	setInputSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
+
+
 const InputSearchSmall: FC<Iprops> = ({ inputSearch, setInputSearch }) => {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputSearch(e.target.value);

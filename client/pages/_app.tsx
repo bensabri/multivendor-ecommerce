@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import { ApolloProvider } from '@apollo/client';
 import type { AppProps } from 'next/app';
 import { AppProvider } from '../context/Context';
-import client from '../hooks/apollo/apollo-client';
+import client from '../graphql/apollo-client';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
