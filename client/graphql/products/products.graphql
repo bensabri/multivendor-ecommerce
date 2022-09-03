@@ -1,24 +1,43 @@
-query getProducts($limit: Int, $contains: String) {
-				products(
-					pagination: { limit: $limit }
-					filters: { title: { contains: $contains } }
-				) {
-					data {
-						id
-						attributes {
-							title
-							description
-							price
-							slug
-							category
-							image {
-								data {
-									attributes {
-										url
-									}
-								}
+query getProducts($slug: String, $limit: Int) {
+		products(
+			pagination: { limit: $limit }
+			filters: { slug: { eq: $slug } }
+		) {
+			data {
+				id
+				attributes {
+					title
+					reference
+					delivery_time
+					stock
+					description
+					price
+					slug
+					category
+					seller_name
+					vendeur {
+						data {
+							id
+							attributes {
+								name
+								email
+								delivery_price
+							}
+						}
+					}
+					image {
+						data {
+							id
+							attributes {
+								name
+								url
+								width
+								height
+								formats
 							}
 						}
 					}
 				}
 			}
+		}
+	}

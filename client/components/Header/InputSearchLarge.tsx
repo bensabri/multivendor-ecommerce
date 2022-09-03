@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 interface Iprops {
-	inputSearch: string;
 	data: GetProductsQuery | undefined;
+	inputSearch: string;
 	setInputSearch: React.Dispatch<React.SetStateAction<string>>;
 	searchProduct: LazyQueryExecFunction<GetProductsQuery, Exact<{
 		limit?: InputMaybe<number> | undefined;
@@ -42,7 +42,6 @@ const InputSearchLarge: FC<Iprops> = ({ inputSearch, setInputSearch, searchProdu
 		return `http://localhost:1337${src}?w=${width}&q=${quality || 75}`;
 	};
 	
-
 	return (
 		<div
 			className={`${

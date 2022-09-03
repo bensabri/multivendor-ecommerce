@@ -1852,29 +1852,48 @@ export type VendeurInput = {
 };
 
 export type GetProductsQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
-  contains?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, description: string, price: number, slug?: string | null, category: Enum_Product_Category, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null }> } } | null }> } | null };
+export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug?: string | null, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
 
 
 export const GetProductsDocument = gql`
-    query getProducts($limit: Int, $contains: String) {
-  products(pagination: {limit: $limit}, filters: {title: {contains: $contains}}) {
+    query getProducts($slug: String, $limit: Int) {
+  products(pagination: {limit: $limit}, filters: {slug: {eq: $slug}}) {
     data {
       id
       attributes {
         title
+        reference
+        delivery_time
+        stock
         description
         price
         slug
         category
+        seller_name
+        vendeur {
+          data {
+            id
+            attributes {
+              name
+              email
+              delivery_price
+            }
+          }
+        }
         image {
           data {
+            id
             attributes {
+              name
               url
+              width
+              height
+              formats
             }
           }
         }
@@ -1896,8 +1915,8 @@ export const GetProductsDocument = gql`
  * @example
  * const { data, loading, error } = useGetProductsQuery({
  *   variables: {
+ *      slug: // value for 'slug'
  *      limit: // value for 'limit'
- *      contains: // value for 'contains'
  *   },
  * });
  */

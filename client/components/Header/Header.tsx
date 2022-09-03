@@ -104,8 +104,8 @@ const Header: FC = () => {
 				</div>
 			</div>
 			<InputSearchSmall
-				// data={data}
-				// searchProduct={searchProduct}
+				data={data}
+				searchProduct={searchProduct}
 				inputSearch={inputSearch}
 				setInputSearch={setInputSearch}
 			/>
