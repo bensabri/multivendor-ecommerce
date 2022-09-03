@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vendeurs",
+  "info": {
+    "singularName": "vendeur",
+    "pluralName": "vendeurs",
+    "displayName": "vendeur",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "delivery_price": {
+      "type": "decimal"
+    },
+    "warning": {
+      "type": "integer",
+      "default": 0
+    },
+    "suspended": {
+      "type": "boolean",
+      "default": false
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "vendeur"
+    },
+    "store_name": {
+      "type": "string"
+    }
+  }
+}

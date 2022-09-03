@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_client_clients",
+  "info": {
+    "displayName": "clients",
+    "icon": "align-right",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "firstname": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone_number": {
+      "type": "biginteger"
+    },
+    "billing_address": {
+      "displayName": "address",
+      "type": "component",
+      "repeatable": false,
+      "component": "address.address"
+    },
+    "lastname": {
+      "type": "string"
+    }
+  }
+}

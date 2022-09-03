@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commandes",
+  "info": {
+    "singularName": "commande",
+    "pluralName": "commandes",
+    "displayName": "commande",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "order_id": {
+      "type": "integer"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "product": {
+      "displayName": "products",
+      "type": "component",
+      "repeatable": true,
+      "component": "product.products"
+    },
+    "is_payed": {
+      "type": "boolean",
+      "default": false
+    },
+    "total_delivery_price": {
+      "type": "decimal"
+    },
+    "client": {
+      "displayName": "clients",
+      "type": "component",
+      "repeatable": false,
+      "component": "client.clients"
+    },
+    "client_email": {
+      "type": "email"
+    },
+    "status": {
+      "displayName": "status",
+      "type": "component",
+      "repeatable": true,
+      "component": "vendeur.status"
+    }
+  }
+}

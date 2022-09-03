@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commande_vendeurs",
+  "info": {
+    "singularName": "commande-vendeur",
+    "pluralName": "commande-vendeurs",
+    "displayName": "CommandeVendeur",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "order_id": {
+      "type": "integer"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "seller_email": {
+      "type": "email"
+    },
+    "product": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.products"
+    },
+    "delivery_price": {
+      "type": "decimal"
+    },
+    "client": {
+      "type": "component",
+      "repeatable": false,
+      "component": "client.clients"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "En attente",
+        "Valide",
+        "En cours de livraison",
+        "Termine",
+        "Annule",
+        "Rembourse"
+      ],
+      "default": "En attente",
+      "required": true
+    },
+    "is_payed": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

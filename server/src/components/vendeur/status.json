@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_vendeur_statuses",
+  "info": {
+    "displayName": "status",
+    "icon": "address-card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "En attente",
+        "Valide",
+        "En cours de livraison",
+        "Termine",
+        "Annule",
+        "Rembourse"
+      ],
+      "default": "En attente"
+    },
+    "seller_email": {
+      "type": "email"
+    }
+  }
+}

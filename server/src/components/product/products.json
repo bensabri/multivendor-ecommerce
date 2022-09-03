@@ -1,0 +1,59 @@
+{
+  "collectionName": "components_product_products",
+  "info": {
+    "displayName": "products",
+    "icon": "align-left",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal",
+      "required": false
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "vendeur": {
+      "displayName": "vendeur",
+      "type": "component",
+      "repeatable": false,
+      "component": "vendeur.vendeur"
+    },
+    "reference": {
+      "type": "biginteger"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "En attente",
+        "Valide",
+        "En cours de livraison",
+        "Termine",
+        "Annule",
+        "Rembourse"
+      ],
+      "default": "En attente"
+    }
+  }
+}

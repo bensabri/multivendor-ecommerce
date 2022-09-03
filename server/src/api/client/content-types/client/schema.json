@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clients",
+  "info": {
+    "singularName": "client",
+    "pluralName": "clients",
+    "displayName": "client",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "billing_address": {
+      "displayName": "address",
+      "type": "component",
+      "repeatable": false,
+      "component": "client.address"
+    },
+    "phone_number": {
+      "type": "biginteger"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "shipping_address": {
+      "displayName": "shipping_address",
+      "type": "component",
+      "repeatable": false,
+      "component": "address.shipping-address"
+    },
+    "civility": {
+      "type": "string"
+    }
+  }
+}

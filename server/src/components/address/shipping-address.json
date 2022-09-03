@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_address_shipping_addresses",
+  "info": {
+    "displayName": "shipping_address",
+    "icon": "ambulance",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "address": {
+      "type": "string"
+    },
+    "zip_code": {
+      "type": "biginteger"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    }
+  }
+}

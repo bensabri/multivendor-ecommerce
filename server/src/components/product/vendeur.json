@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_product_vendeurs",
+  "info": {
+    "displayName": "vendeur",
+    "icon": "angle-up"
+  },
+  "options": {},
+  "attributes": {
+    "category_name": {
+      "type": "string"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "seller_name": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "email"
+    },
+    "is_ready_to_deliver": {
+      "type": "boolean"
+    }
+  }
+}
