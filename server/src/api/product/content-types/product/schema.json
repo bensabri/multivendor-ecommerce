@@ -39,7 +39,12 @@
       "type": "media",
       "multiple": true,
       "required": true,
-      "allowedTypes": ["images", "files", "videos", "audios"],
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -90,7 +95,7 @@
     "slug": {
       "type": "uid",
       "targetField": "title",
-      "required": false
+      "required": true
     },
     "Seo": {
       "displayName": "Seo",
