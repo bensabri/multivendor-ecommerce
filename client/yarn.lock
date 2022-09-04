@@ -1168,6 +1168,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-image-gallery@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-image-gallery/-/react-image-gallery-1.0.5.tgz#563234ac0fa131e2920199d191fca0c1594ba29d"
+  integrity sha512-CjIjFXmV7zGRO/FkdtPK31Rwj0ud7Xz/9e5o4DCX2Lx96jR8+0xCmKeUAQQVN3pKc6jUjOC0f/aEylhKg8vhAw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@18.0.17":
   version "18.0.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.17.tgz#4583d9c322d67efe4b39a935d223edcc7050ccf4"

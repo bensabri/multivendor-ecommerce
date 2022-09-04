@@ -9,6 +9,7 @@ type Props = {
 const AppContext = createContext({} as Icontext);
 
 const AppProvider = ({ children }: Props) => {
+	const [product, setProduct] = useState<IProductList['product']>([]);
 	const [productList, setProductList] = useState<IProductList['product']>([]);
 	const [activeTab, setActiveTab] = useState<boolean>(false);
 
@@ -17,6 +18,8 @@ const AppProvider = ({ children }: Props) => {
 		setActiveTab,
 		productList,
 		setProductList,
+		product, 
+		setProduct,
 	};
 	return (
 		<AppContext.Provider value={contextValue}>
