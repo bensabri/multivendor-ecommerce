@@ -18,9 +18,10 @@ const AppProvider = ({ children }: Props) => {
 		setActiveTab,
 		productList,
 		setProductList,
-		product, 
+		product,
 		setProduct,
 	};
+
 	return (
 		<AppContext.Provider value={contextValue}>
 			{children}

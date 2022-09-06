@@ -12,6 +12,7 @@ export interface IProductList {
 		vendeur: string;
 		seller_name: string;
 		delivery_time: number;
+		reference: number;
 	}[];
 }
 

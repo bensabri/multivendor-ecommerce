@@ -7,20 +7,26 @@ import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import InputSearchSmall from './InputSearchSmall';
 import { NavBarData } from './NavBarData';
 import { gql, useLazyQuery, useQuery } from '@apollo/client';
-import { GetProductsDocument, GetProductsQuery, GetProductsQueryVariables } from '../../generated';
-
+import {
+	GetProductsDocument,
+	GetProductsQuery,
+	GetProductsQueryVariables,
+} from '../../generated';
 
 const Header: FC = () => {
-	const { activeTab, setActiveTab, productList } = useGlobalContext();
+	const { activeTab, setActiveTab, productList, product } =
+		useGlobalContext();
 	const [inputSearch, setInputSearch] = useState<string>('');
 
 	const handleClick = () => {
 		setActiveTab(!activeTab);
 	};
 
-	const [searchProduct,{ error, data }] = useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument);
+	const [searchProduct, { error, data }] = useLazyQuery<
+		GetProductsQuery,
+		GetProductsQueryVariables
+	>(GetProductsDocument);
 
- 
 	return (
 		<header className="bg-gray-900">
 			<div className="flex items-center p-1 flex-grow py-2">

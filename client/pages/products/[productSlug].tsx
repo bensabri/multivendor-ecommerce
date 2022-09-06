@@ -52,26 +52,31 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 		});
 
 	const handleAddToBasket = (
-		title: string,
-		description: string,
-		price: number,
-		category: string,
-		image: string,
+		title: string | undefined,
+		description: string | undefined,
+		price: number | undefined,
+		category: string | undefined,
+		image: string | undefined,
 		vendeur: Vendeur,
-		seller_name: string,
-		reference: number
+		seller_name: string | undefined
 	) => {
 		if (productArray) {
 			setProduct([
 				...product,
 				{
 					id: productArray[0].id,
-					category: productArray[0].category,
-					title: productArray[0].title,
+					category: category,
+					title: title,
 					delivery_time: productArray[0].delivery_time,
-					description: productArray[0].description,
-					price: productArray[0].price,
-					total: productArray[0].price! * quantity,
+					description: description,
+					price: price,
+					total: price! * quantity,
+					quantity: Number(quantity),
+					stock: productArray[0].stock,
+					image: image,
+					vendeur: vendeur,
+					seller_name: seller_name,
+					reference: productArray[0].reference,
 				},
 			]);
 		}
@@ -91,7 +96,7 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 							{/* Left */}
 							<div className="lg:col-span-3 lg:p-3 xl:p-5 space-y-4 bg-white shadow-md rounded-md">
 								<div className="pb-3 lg:flex">
-									<div>
+									<div className="lg:max-w-md">
 										<ImageGallery
 											items={images!}
 											showFullscreenButton={false}
@@ -151,45 +156,71 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 									</div>
 								</div>
 								{/* Right */}
-								<div className="lg:col-span-1  flex flex-col p-4 justify-around border-2 text-center lg:text-left xl:text-left xl:p-4 space-y-6 lg:space-y-10 rounded-md bg-white shadow-md">
-									<div className="text-red-500 text-2xl lg:text-4xl font-bold">
-										<Currency
-											quantity={productArray[0].price!}
-											currency="EUR"
-										/>
-									</div>
-									<div>
-										<p className="text-sm font-semibold xl:text-base p-4">
-											Expédier sous:{' '}
-											<span className="text-sm xl:text-base font-normal">
-												{productArray[0].delivery_time}{' '}
-												Jours
-											</span>
-										</p>
-									</div>
-									<div className="w-[4rem] mx-auto">
-										NativeSelect
-									</div>
-									{productArray[0].stock! > 5 ? (
-										<div>
-											<p className="text-green-600 font-semibold">
-												En Stock
-											</p>
-										</div>
-									) : productArray[0].stock! > 0 ? (
-										<div>
-											<p className="text-orange-500 font-semibold">
-												{`Moins de 5 en stock`}
-											</p>
-										</div>
-									) : productArray[0].stock! === 0 ? (
-										<p className="text-red-600 font-semibold">
-											Rupture de Stock
-										</p>
-									) : (
-										''
-									)}
+							</div>
+							<div className="lg:col-span-1 flex flex-col p-4 justify-around border-2 text-center lg:text-left xl:text-left xl:p-4 space-y-6 lg:space-y-10 rounded-md bg-white shadow-md">
+								<div className="text-red-500 text-2xl lg:text-4xl font-bold">
+									<Currency
+										quantity={productArray[0].price!}
+										currency="EUR"
+									/>
 								</div>
+								<div>
+									<p className="text-sm font-semibold xl:text-base p-4">
+										Expédier sous:{' '}
+										<span className="text-sm xl:text-base font-normal">
+											{productArray[0].delivery_time}{' '}
+											Jours
+										</span>
+									</p>
+								</div>
+								<div className="w-[4rem] mx-auto">
+									NativeSelect
+								</div>
+								{productArray[0].stock! > 5 ? (
+									<div>
+										<p className="text-green-600 font-semibold">
+											En Stock
+										</p>
+									</div>
+								) : productArray[0].stock! > 0 ? (
+									<div>
+										<p className="text-orange-500 font-semibold">
+											{`Moins de 5 en stock`}
+										</p>
+									</div>
+								) : productArray[0].stock! === 0 ? (
+									<p className="text-red-600 font-semibold">
+										Rupture de Stock
+									</p>
+								) : (
+									''
+								)}
+								<button
+									disabled={productArray[0].stock === 0}
+									onClick={() => {
+										handleAddToBasket(
+											productArray[0].title,
+											productArray[0].description,
+											productArray[0].price,
+											productArray[0].category,
+											productArray[0].image?.data[0]
+												.attributes?.url,
+											productArray[0].vendeur?.data
+												?.attributes!,
+											productArray[0].seller_name
+										);
+									}}
+									className={`${
+										productArray[0].stock === 0
+											? 'bg-gray-400 cursor-not-allowed p-2 mx-4 text-md font-semibold lg:text-lg text-white rounded'
+											: 'bg-basketBtn hover:bg-green-500 p-2 mx-2 lg:text-md xl:text-lg font-normal text-white rounded transition duration-150 ease-in'
+									}`}
+								>
+									Ajouter au panier
+								</button>
+								<p className="text-sm xl:text-base p-4">
+									Vendu par: {productArray[0].seller_name}{' '}
+								</p>
 							</div>
 						</div>
 					</main>
