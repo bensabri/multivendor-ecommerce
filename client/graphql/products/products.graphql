@@ -1,43 +1,58 @@
-query getProducts($slug: String, $limit: Int) {
-		products(
-			pagination: { limit: $limit }
-			filters: { slug: { eq: $slug } }
-		) {
-			data {
-				id
-				attributes {
-					title
-					reference
-					delivery_time
-					stock
-					description
-					price
-					slug
-					category
-					seller_name
-					vendeur {
-						data {
-							id
-							attributes {
-								name
-								email
-								delivery_price
-							}
+query getProducts(
+	$slug: String
+	$limit: Int
+	$pageSize: Int
+	$page: Int
+	$suspended: Boolean
+) {
+	products(
+		pagination: { limit: $limit, pageSize: $pageSize, page: $page }
+		filters: {
+			slug: { eq: $slug }
+			vendeur: { suspended: { eq: $suspended } }
+		}
+	) {
+		meta {
+			pagination {
+				total
+			}
+		}
+		data {
+			id
+			attributes {
+				title
+				reference
+				delivery_time
+				stock
+				description
+				price
+				slug
+				category
+				seller_name
+				vendeur {
+					data {
+						id
+						attributes {
+							name
+							email
+							delivery_price
+							suspended
 						}
 					}
-					image {
-						data {
-							id
-							attributes {
-								name
-								url
-								width
-								height
-								formats
-							}
+				}
+				image {
+					data {
+						id
+						attributes {
+							name
+							url
+							width
+							height
+							formats
 						}
 					}
 				}
 			}
 		}
 	}
+}

@@ -1854,15 +1854,26 @@ export type VendeurInput = {
 export type GetProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  suspended?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug: string, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
+export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug: string, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
 
 
 export const GetProductsDocument = gql`
-    query getProducts($slug: String, $limit: Int) {
-  products(pagination: {limit: $limit}, filters: {slug: {eq: $slug}}) {
+    query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean) {
+  products(
+    pagination: {limit: $limit, pageSize: $pageSize, page: $page}
+    filters: {slug: {eq: $slug}, vendeur: {suspended: {eq: $suspended}}}
+  ) {
+    meta {
+      pagination {
+        total
+      }
+    }
     data {
       id
       attributes {
@@ -1882,6 +1893,7 @@ export const GetProductsDocument = gql`
               name
               email
               delivery_price
+              suspended
             }
           }
         }
@@ -1917,6 +1929,9 @@ export const GetProductsDocument = gql`
  *   variables: {
  *      slug: // value for 'slug'
  *      limit: // value for 'limit'
+ *      pageSize: // value for 'pageSize'
+ *      page: // value for 'page'
+ *      suspended: // value for 'suspended'
  *   },
  * });
  */
