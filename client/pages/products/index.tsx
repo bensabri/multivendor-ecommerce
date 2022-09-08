@@ -35,9 +35,19 @@ const products: NextPage = () => {
 				<link rel="icon" href="/croissant-de-lune.png" />
 			</Head>
 			<Header />
-			<main className="max-w-screen-2xl mx-auto">
-				{loading ? <div>Loading</div> : <ProductFeed />}
-			</main>
+			{products?.products?.data[0] ? (
+				<main className="max-w-screen-2xl mx-auto">
+					{loading ? (
+						<div>Loading</div>
+					) : (
+						<ProductFeed data={products} />
+					)}
+				</main>
+			) : (
+				<div className="flex justify-center items-center h-[30rem]">
+					<p>Aucun produit</p>
+				</div>
+			)}
 		</div>
 	);
 };
