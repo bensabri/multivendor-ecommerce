@@ -1,6 +1,12 @@
 import { IProductList } from '../@types/model';
 import { Icontext } from '../@types/context';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import {
+	createContext,
+	useContext,
+	useState,
+	ReactNode,
+	useEffect,
+} from 'react';
 
 type Props = {
 	children: ReactNode;
@@ -21,6 +27,16 @@ const AppProvider = ({ children }: Props) => {
 		product,
 		setProduct,
 	};
+
+	useEffect(() => {
+		setProductList(
+			Array.from(new Set(product?.map((item) => item.title))).map(
+				(title) => {
+					return product.find((item) => item.title === title)!;
+				}
+			)
+		);
+	}, [product]);
 
 	return (
 		<AppContext.Provider value={contextValue}>

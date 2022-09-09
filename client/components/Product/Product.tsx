@@ -1,4 +1,10 @@
+import Image, { ImageLoaderProps } from 'next/image';
+import { useRouter } from 'next/router';
 import { IProductsAttributes } from '../../@types/model';
+import Currency from 'react-currency-formatter';
+import { Vendeur } from '../../generated';
+import { useGlobalContext } from '../../context/Context';
+import { useState } from 'react';
 
 type Iprops = {
 	id: string | null | undefined;
@@ -6,7 +12,103 @@ type Iprops = {
 };
 
 const Product = ({ id, attributes }: Iprops) => {
-	return <div></div>;
+	const { product, setProduct } = useGlobalContext();
+	const [quantity, setQuantity] = useState<number>(1);
+	const router = useRouter();
+
+	const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
+		return `http://localhost:1337${src}?w=${width}&q=${quality || 75}`;
+	};
+
+	const handleAddToBasket = (
+		title: string | undefined,
+		description: string | undefined,
+		price: number | undefined,
+		category: string | undefined,
+		image: string | undefined,
+		vendeur: Vendeur
+	) => {
+		setProduct([
+			...product,
+			{
+				id: id,
+				category: category,
+				title: title,
+				delivery_time: attributes?.delivery_time,
+				description: description,
+				price: price,
+				total: attributes?.price! * quantity,
+				quantity: Number(quantity),
+				stock: attributes?.stock,
+				image: image,
+				vendeur: vendeur,
+				seller_name: attributes?.seller_name,
+				reference: attributes?.reference,
+			},
+		]);
+	};
+
+	return (
+		<div className="relative flex flex-col m-5 bg-white z-30 p-10 rounded-lg">
+			<p className="absolute top-2 right-2 text-xs italic text-gray-400">
+				{attributes?.category.replaceAll('_', ' ')}
+			</p>
+			<Image
+				loader={myLoader}
+				src={attributes?.image.data[0].attributes?.url!}
+				property="property"
+				height={200}
+				width={200}
+				objectFit="contain"
+				onClick={() => router.push(`/products/${attributes?.slug}`)}
+			/>
+			<h4
+				title={attributes?.title}
+				className="my-3 font-semibold line-clamp-1"
+			>
+				{attributes?.title}
+			</h4>
+			{attributes?.stock! > 5 ? (
+				<div>
+					<p className="text-green-600 font-normal">En Stock</p>
+				</div>
+			) : attributes?.stock! > 0 ? (
+				<div></div>
+			) : attributes?.stock! === 0 ? (
+				<p className="text-red-600 font-normal">Rupture de Stock</p>
+			) : (
+				''
+			)}
+			<div
+				dangerouslySetInnerHTML={{
+					__html: attributes?.description.slice(0, 30)!,
+				}}
+				className="text-xs md:text-sm my-2 line-clamp-2"
+			/>
+			{attributes?.stock! > 0 && (
+				<div className="mb-5 text-2xl text-red-600 font-bold">
+					<Currency quantity={attributes?.price!} currency="EUR" />
+				</div>
+			)}
+			{attributes?.stock! > 0 && (
+				<button
+					onClick={() => {
+						handleAddToBasket(
+							attributes?.title,
+							attributes?.description,
+							attributes?.price,
+							attributes?.category,
+							attributes?.image.data[0].attributes?.url,
+							attributes?.vendeur?.data?.attributes!
+						);
+					}}
+					className="p-2 mx-5 text-md font-semibold lg:text-lg bg-basketBtn hover:bg-green-500 text-white rounded transition duration-150 ease-in"
+				>
+					Ajouter au panier
+				</button>
+			)}
+		</div>
+	);
 };
 
 export default Product;

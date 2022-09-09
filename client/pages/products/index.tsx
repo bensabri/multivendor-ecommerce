@@ -16,7 +16,7 @@ const products: NextPage = () => {
 		GetProductsQueryVariables
 	>(GetProductsDocument, {
 		variables: {
-			pageSize: 1,
+			pageSize: 10,
 			page: 1,
 			suspended: false,
 		},

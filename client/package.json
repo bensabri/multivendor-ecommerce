@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@heroicons/react": "^1.0.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@types/react-currency-formatter": "^1.1.4",
     "@types/react-image-gallery": "^1.0.5",
     "graphql": "^16.6.0",
