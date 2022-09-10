@@ -5,6 +5,10 @@ import Currency from 'react-currency-formatter';
 import { Vendeur } from '../../generated';
 import { useGlobalContext } from '../../context/Context';
 import { useState } from 'react';
+import { showNotification } from '@mantine/notifications';
+import { Affix, Button, Transition } from '@mantine/core';
+import { useWindowScroll } from '@mantine/hooks';
+import { ArrowNarrowUpIcon } from '@heroicons/react/solid';
 
 type Iprops = {
 	id: string | null | undefined;
@@ -12,6 +16,7 @@ type Iprops = {
 };
 
 const Product = ({ id, attributes }: Iprops) => {
+	const [scroll, scrollTo] = useWindowScroll();
 	const { product, setProduct } = useGlobalContext();
 	const [quantity, setQuantity] = useState<number>(1);
 	const router = useRouter();
@@ -107,6 +112,20 @@ const Product = ({ id, attributes }: Iprops) => {
 					Ajouter au panier
 				</button>
 			)}
+			<Affix position={{ bottom: 20, right: 20 }}>
+				<Transition transition="slide-up" mounted={scroll.y > 0}>
+					{(transitionStyles) => (
+						<Button
+							className="bg-blue-500"
+							leftIcon={<ArrowNarrowUpIcon className="w-4" />}
+							style={transitionStyles}
+							onClick={() => scrollTo({ y: 0 })}
+						>
+							Scroll to top
+						</Button>
+					)}
+				</Transition>
+			</Affix>
 		</div>
 	);
 };
