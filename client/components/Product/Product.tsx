@@ -51,6 +51,13 @@ const Product = ({ id, attributes }: Iprops) => {
 				reference: attributes?.reference,
 			},
 		]);
+		showNotification({
+			title: 'Ajouté aux panier',
+			message: `L'article ${attributes?.title.substring(
+				0,
+				20
+			)} a été ajouté aux panier`,
+		});
 	};
 
 	return (
