@@ -4,13 +4,14 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import ProductFeed from '../../components/ProductFeed';
-import { Pagination } from '@mantine/core';
+import { Loader, Pagination } from '@mantine/core';
 import {
 	GetProductsDocument,
 	GetProductsQuery,
 	GetProductsQueryVariables,
 } from '../../generated';
 import { useGlobalContext } from '../../context/Context';
+import Footer from '../../components/Footer/Footer';
 
 const products: NextPage = () => {
 	const [itemPerPages] = useState<number>(10); // Set the item showen per page
@@ -31,7 +32,12 @@ const products: NextPage = () => {
 		getProducts();
 	}, []);
 
-	if (loading) return <div>Loading</div>;
+	if (loading)
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<Loader color="gray" />
+			</div>
+		);
 
 	return (
 		<div className="bg-gray-100">
@@ -66,6 +72,7 @@ const products: NextPage = () => {
 					<p>Aucun produit</p>
 				</div>
 			)}
+			<Footer />
 		</div>
 	);
 };

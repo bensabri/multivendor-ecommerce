@@ -7,4 +7,6 @@ export interface Icontext {
 	setProduct: Dispatch<SetStateAction<IProductList[]>>;
 	activePageProducts: number;
 	setPageProducts: Dispatch<SetStateAction<number>>;
+	activeCategory: string;
+	setActiveCategory: Dispatch<SetStateAction<string>>;
 }

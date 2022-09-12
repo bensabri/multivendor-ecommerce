@@ -15,6 +15,7 @@ import {
 	GetProductsQueryVariables,
 	Vendeur,
 } from '../../generated';
+import Footer from '../../components/Footer/Footer';
 
 interface Idata {
 	data: GetProductsQuery;
@@ -104,7 +105,7 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 			{productArray && (
 				<div className="bg-gray-100">
 					<Head>
-						<title>{productArray[0].title} </title>
+						<title>{productArray[0].title}</title>
 						<link rel="icon" href="/croissant-de-lune.png" />
 					</Head>
 					<Header />
@@ -203,7 +204,6 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 													)
 												)
 											}
-											withAsterisk
 										/>
 									)}
 								</div>
@@ -255,6 +255,7 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 							</div>
 						</div>
 					</main>
+					<Footer />
 				</div>
 			)}
 		</>

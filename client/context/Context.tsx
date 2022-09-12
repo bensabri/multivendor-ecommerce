@@ -19,6 +19,10 @@ const AppProvider = ({ children }: Props) => {
 	const [productList, setProductList] = useState<IProductList['product']>([]);
 	const [activeTab, setActiveTab] = useState<boolean>(false);
 	const [activePageProducts, setPageProducts] = useState<number>(1); // active page pagination products page
+	const [activeCategory, setActiveCategory] = useState(
+		// categories fetch at first load using lazyquery
+		'Articles Religieux, Parfun'
+	);
 
 	const contextValue: Icontext = {
 		activeTab,
@@ -29,6 +33,8 @@ const AppProvider = ({ children }: Props) => {
 		setProduct,
 		activePageProducts,
 		setPageProducts,
+		activeCategory,
+		setActiveCategory,
 	};
 
 	useEffect(() => {
