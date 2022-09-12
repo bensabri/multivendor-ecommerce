@@ -1,4 +1,6 @@
-const Footer = () => {
+import { FC } from 'react';
+
+const Footer: FC = () => {
 	return (
 		<>
 			<footer className="grid grid-cols-1 md:grid-cols-4 gap-y-10 px-32 py-14 bg-gray-200">

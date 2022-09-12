@@ -21,15 +21,15 @@ export interface IProductList {
 export interface IProductsAttributes {
 	attributes?: {
 		__typename?: 'Product';
-		title: string;
-		reference: any;
-		delivery_time?: number | null;
-		stock: number;
+		category: Enum_Product_Category;
 		description: string;
 		price: number;
+		stock: number;
 		slug: string;
-		category: Enum_Product_Category;
 		seller_name: string;
+		delivery_time?: number | null;
+		title: string;
+		reference: number | string;
 		vendeur?: {
 			__typename?: 'VendeurEntityResponse';
 			data?: {

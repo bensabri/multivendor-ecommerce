@@ -4,7 +4,7 @@ import { IProductsAttributes } from '../../@types/model';
 import Currency from 'react-currency-formatter';
 import { Vendeur } from '../../generated';
 import { useGlobalContext } from '../../context/Context';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 import { Affix, Button, Transition } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
@@ -15,7 +15,7 @@ type Iprops = {
 	attributes: IProductsAttributes['attributes'];
 };
 
-const Product = ({ id, attributes }: Iprops) => {
+const Product: FC<Iprops> = ({ id, attributes }) => {
 	const [scroll, scrollTo] = useWindowScroll();
 	const { product, setProduct } = useGlobalContext();
 	const [quantity, setQuantity] = useState<number>(1);

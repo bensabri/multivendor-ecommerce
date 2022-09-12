@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
-import ProductFeed from '../../components/ProductFeed';
+import ProductFeed from '../../components/Product/ProductFeed';
 import { Loader, Pagination } from '@mantine/core';
 import {
 	GetProductsDocument,
@@ -42,7 +42,7 @@ const products: NextPage = () => {
 	return (
 		<div className="bg-gray-100">
 			<Head>
-				<title>Market place</title>
+				<title>{products?.products?.data[0].attributes?.title} </title>
 				<link rel="icon" href="/croissant-de-lune.png" />
 			</Head>
 			<Header />

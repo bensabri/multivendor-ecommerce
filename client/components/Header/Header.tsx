@@ -12,10 +12,18 @@ import {
 	GetProductsQuery,
 	GetProductsQueryVariables,
 } from '../../generated';
+import { useRouter } from 'next/router';
 
 const Header: FC = () => {
-	const { activeTab, setActiveTab, productList, product } =
-		useGlobalContext();
+	const router = useRouter();
+	const {
+		activeTab,
+		setActiveTab,
+		productList,
+		product,
+		activeCategory,
+		setActiveCategory,
+	} = useGlobalContext();
 	const [inputSearch, setInputSearch] = useState<string>('');
 
 	const handleClick = () => {
@@ -66,10 +74,10 @@ const Header: FC = () => {
 						{NavBarData?.map((item, i) => (
 							<li
 								key={i}
-								// onClick={() => {
-								// 	setActiveCatogory(item.title);
-								// 	router.push('/category');
-								// }}
+								onClick={() => {
+									setActiveCategory(item.title);
+									router.push('/category');
+								}}
 								className="text-white cursor-pointer px-7 py-3 hover:bg-headerDefault"
 							>
 								{item.title}{' '}
@@ -129,10 +137,10 @@ const Header: FC = () => {
 				</Link>
 				{NavBarData?.map((item, i) => (
 					<li
-						// onClick={() => {
-						// 	setActiveCatogory(item.title);
-						// 	router.push('/category');
-						// }}
+						onClick={() => {
+							setActiveCategory(item.title);
+							router.push('/category');
+						}}
 						key={i}
 						className="cursor-pointer hover:underline hidden lg:inline-flex text-md"
 					>

@@ -23,6 +23,7 @@ const AppProvider = ({ children }: Props) => {
 		// categories fetch at first load using lazyquery
 		'Articles Religieux, Parfun'
 	);
+	const [activePageCategory, setPageCategory] = useState(1); // active page pagination category page
 
 	const contextValue: Icontext = {
 		activeTab,
@@ -35,6 +36,8 @@ const AppProvider = ({ children }: Props) => {
 		setPageProducts,
 		activeCategory,
 		setActiveCategory,
+		activePageCategory,
+		setPageCategory,
 	};
 
 	useEffect(() => {

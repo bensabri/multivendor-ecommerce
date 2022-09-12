@@ -1851,6 +1851,18 @@ export type VendeurInput = {
   warning?: InputMaybe<Scalars['Int']>;
 };
 
+export type GetCategoriesQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+  title?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  suspended?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', title?: string | null, slug?: string | null, products?: { __typename?: 'ProductRelationResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', category: Enum_Product_Category, description: string, price: number, stock: number, slug: string, seller_name: string, delivery_time?: number | null, title: string, reference: any, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> }, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null } | null }> } | null } | null }> } | null };
+
 export type GetProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1863,6 +1875,99 @@ export type GetProductsQueryVariables = Exact<{
 export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug: string, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
 
 
+export const GetCategoriesDocument = gql`
+    query getCategories($id: ID, $title: String, $pageSize: Int, $page: Int, $limit: Int, $suspended: Boolean) {
+  categories(
+    pagination: {limit: $limit, pageSize: $pageSize, page: $page}
+    filters: {id: {eq: $id}, title: {eq: $title}, products: {vendeur: {suspended: {eq: $suspended}}}}
+  ) {
+    meta {
+      pagination {
+        total
+      }
+    }
+    data {
+      id
+      attributes {
+        title
+        slug
+        products {
+          data {
+            id
+            attributes {
+              category
+              description
+              image {
+                data {
+                  id
+                  attributes {
+                    name
+                    url
+                    width
+                    height
+                    formats
+                  }
+                }
+              }
+              price
+              stock
+              slug
+              seller_name
+              delivery_time
+              title
+              reference
+              vendeur {
+                data {
+                  id
+                  attributes {
+                    name
+                    email
+                    delivery_price
+                    suspended
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *      pageSize: // value for 'pageSize'
+ *      page: // value for 'page'
+ *      limit: // value for 'limit'
+ *      suspended: // value for 'suspended'
+ *   },
+ * });
+ */
+export function useGetCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+      }
+export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+        }
+export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
+export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
+export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetProductsDocument = gql`
     query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean) {
   products(

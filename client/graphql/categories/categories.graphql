@@ -1,0 +1,69 @@
+query getCategories(
+	$id: ID
+	$title: String
+	$pageSize: Int
+	$page: Int
+	$limit: Int
+	$suspended: Boolean
+) {
+	categories(
+		pagination: { limit: $limit, pageSize: $pageSize, page: $page }
+		filters: {
+			id: { eq: $id }
+			title: { eq: $title }
+			products: { vendeur: { suspended: { eq: $suspended } } }
+		}
+	) {
+		meta {
+			pagination {
+				total
+			}
+		}
+		data {
+			id
+			attributes {
+				title
+				slug
+				products {
+					data {
+						id
+						attributes {
+							category
+							description
+							image {
+								data {
+									id
+									attributes {
+										name
+										url
+										width
+										height
+										formats
+									}
+								}
+							}
+							price
+							stock
+							slug
+							seller_name
+							delivery_time
+							title
+							reference
+							vendeur {
+								data {
+									id
+									attributes {
+										name
+										email
+										delivery_price
+										suspended
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
