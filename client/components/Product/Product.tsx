@@ -72,6 +72,7 @@ const Product = ({ id, attributes }: Iprops) => {
 				height={200}
 				width={200}
 				objectFit="contain"
+				className="cursor-pointer"
 				onClick={() => router.push(`/products/${attributes?.slug}`)}
 			/>
 			<h4

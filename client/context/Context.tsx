@@ -18,6 +18,7 @@ const AppProvider = ({ children }: Props) => {
 	const [product, setProduct] = useState<IProductList['product']>([]);
 	const [productList, setProductList] = useState<IProductList['product']>([]);
 	const [activeTab, setActiveTab] = useState<boolean>(false);
+	const [activePageProducts, setPageProducts] = useState<number>(1); // active page pagination products page
 
 	const contextValue: Icontext = {
 		activeTab,
@@ -26,6 +27,8 @@ const AppProvider = ({ children }: Props) => {
 		setProductList,
 		product,
 		setProduct,
+		activePageProducts,
+		setPageProducts,
 	};
 
 	useEffect(() => {

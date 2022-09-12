@@ -8,6 +8,7 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Currency from 'react-currency-formatter';
 import { NativeSelect } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import {
 	GetProductsDocument,
 	GetProductsQuery,
@@ -79,9 +80,17 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 					reference: productArray[0].reference,
 				},
 			]);
+			showNotification({
+				title: 'Ajouté aux panier',
+				message: `L'article ${productArray[0].title?.substring(
+					0,
+					20
+				)} a été ajouté aux panier`,
+			});
 		}
 	};
 
+	// Feed the select with stock from database
 	const dataSelect =
 		productArray &&
 		Array(productArray[0].stock)
