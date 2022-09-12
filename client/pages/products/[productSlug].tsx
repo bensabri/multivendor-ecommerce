@@ -1,13 +1,13 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Header from '../../components/Header/Header';
 import { useGlobalContext } from '../../context/Context';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Currency from 'react-currency-formatter';
-// import { ParsedUrlQuery } from 'querystring'
+import { NativeSelect } from '@mantine/core';
 import {
 	GetProductsDocument,
 	GetProductsQuery,
@@ -81,6 +81,14 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 			]);
 		}
 	};
+
+	const dataSelect =
+		productArray &&
+		Array(productArray[0].stock)
+			.fill(productArray[0].stock)
+			.map((_, i) => {
+				return String(i + 1);
+			});
 
 	return (
 		<>
@@ -174,7 +182,21 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 									</p>
 								</div>
 								<div className="w-[4rem] mx-auto">
-									NativeSelect
+									{dataSelect && (
+										<NativeSelect
+											label="Quantité"
+											data={dataSelect}
+											onChange={(event) =>
+												setQuantity(
+													Number(
+														event.currentTarget
+															.value
+													)
+												)
+											}
+											withAsterisk
+										/>
+									)}
 								</div>
 								{productArray[0].stock! > 5 ? (
 									<div>
