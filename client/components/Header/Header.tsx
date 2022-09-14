@@ -104,7 +104,7 @@ const Header: FC = () => {
 					</div>
 				</div>
 				<div
-					// onClick={() => router.push('/checkout')}
+					onClick={() => router.push('/checkout')}
 					className="relative py-2 cursor-pointer hover:underline flex items-center group text-white"
 				>
 					<ShoppingCartIcon className="h-10" />

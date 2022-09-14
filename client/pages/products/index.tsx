@@ -12,10 +12,15 @@ import {
 } from '../../generated';
 import { useGlobalContext } from '../../context/Context';
 import Footer from '../../components/Footer/Footer';
+import { IProductList } from '../../@types/model';
 
-const products: NextPage = () => {
+interface Props {
+	product: IProductList[];
+}
+
+const products: NextPage<Props> = () => {
 	const [itemPerPages] = useState<number>(10); // Set the item showen per page
-	const { activePageProducts, setPageProducts } = useGlobalContext();
+	const { activePageProducts, setPageProducts, product } = useGlobalContext();
 
 	const [getProducts, { loading, error, data: products }] = useLazyQuery<
 		GetProductsQuery,

@@ -1,21 +1,35 @@
 import { Enum_Product_Category } from '../generated';
 
+// ProductList types //
+export interface IProductListImage {
+	id: number;
+	attributes?: {
+		url: string;
+	};
+}
+
+export interface IproductListVendeur {
+	name: string;
+	email: string;
+	delivery_price: number;
+	suspended: boolean;
+}
+
 export interface IProductList {
-	product: {
-		id: number;
-		category: string;
-		title: string;
-		description: string;
-		price: number;
-		total: number;
-		quantity: number;
-		stock: number;
-		image: string;
-		vendeur: string;
-		seller_name: string;
-		delivery_time: number;
-		reference: number;
-	}[];
+	id: string | null | undefined;
+	category: string;
+	title: string;
+	description: string;
+	price: number;
+	total: number;
+	quantity: number;
+	stock: number;
+	image: IProductListImage;
+	vendeur: IproductListVendeur;
+	seller_name: string;
+	delivery_time: number;
+	reference: number;
+	[];
 }
 
 export interface IProductsAttributes {

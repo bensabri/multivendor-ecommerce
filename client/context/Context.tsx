@@ -15,8 +15,8 @@ type Props = {
 const AppContext = createContext({} as Icontext);
 
 const AppProvider = ({ children }: Props) => {
-	const [product, setProduct] = useState<IProductList['product']>([]);
-	const [productList, setProductList] = useState<IProductList['product']>([]);
+	const [product, setProduct] = useState<IProductList[]>([]);
+	const [productList, setProductList] = useState<IProductList[]>([]);
 	const [activeTab, setActiveTab] = useState<boolean>(false);
 	const [activePageProducts, setPageProducts] = useState<number>(1); // active page pagination products page
 	const [activeCategory, setActiveCategory] = useState(

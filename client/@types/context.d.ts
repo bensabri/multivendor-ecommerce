@@ -1,9 +1,11 @@
+import { IProductList } from './model';
+
 export interface Icontext {
 	activeTab: boolean;
 	setActiveTab: Dispatch<SetStateAction<boolean>>;
-	productList: IProductList['product'];
+	productList: IProductList[];
 	setProductList: Dispatch<SetStateAction<IProductList[]>>;
-	product: IProductList['product'];
+	product: IProductList[];
 	setProduct: Dispatch<SetStateAction<IProductList[]>>;
 	activePageProducts: number;
 	setPageProducts: Dispatch<SetStateAction<number>>;
