@@ -1,12 +1,6 @@
 import { Enum_Product_Category } from '../generated';
 
 // ProductList types //
-export interface IProductListImage {
-	id: number;
-	attributes?: {
-		url: string;
-	};
-}
 
 export interface IproductListVendeur {
 	name: string;
@@ -24,7 +18,7 @@ export interface IProductList {
 	total: number;
 	quantity: number;
 	stock: number;
-	image: IProductListImage;
+	image: string;
 	vendeur: IproductListVendeur;
 	seller_name: string;
 	delivery_time: number;

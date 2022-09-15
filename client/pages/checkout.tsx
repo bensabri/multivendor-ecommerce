@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CheckoutProduct from '../components/Checkout/CheckoutProduct';
 import Header from '../components/Header/Header';
 import { useGlobalContext } from '../context/Context';
@@ -21,7 +21,7 @@ const checkout: NextPage = () => {
 		quantity: item.quantity,
 		total: item.total,
 		reference: item.reference,
-		image: item.image.id,
+		image: item.image,
 		vendeur: {
 			seller_name: item.vendeur.name,
 			seller_email: item.vendeur.email,
@@ -51,6 +51,57 @@ const checkout: NextPage = () => {
 		setReRender(!reRender);
 	};
 
+	const getTotalSells = (name: string): number => {
+		// Get the total price amount per vendeur
+		let filterName = productList
+			.filter((item) => item.seller_name === name)
+			.reduce((a, b) => a + b.total, 0);
+		return filterName;
+	};
+
+	const handletotalDelivery = () => {
+		const uniqueSeller = [
+			...new Map(
+				productList.map((item) => [item['seller_name'], item.vendeur])
+			).values(),
+		];
+
+		const totalPriceSeller = uniqueSeller.map((item) => {
+			// Create an object of each vendeur by name, total delivery, price, get the total sells per vendeur
+			return {
+				name: item.name,
+				total: getTotalSells(item.name),
+				delivery_price: item.delivery_price,
+			};
+		});
+
+		const deliveryPrice = totalPriceSeller.map((item) => {
+			// from that object split the free delivery price and the payed
+			// get if the delivery if free or not
+			if (item.total < 50) {
+				return { delivery_price: item.delivery_price };
+			}
+			return { delivery_price: 0 };
+		});
+
+		const totalDeliveryPrice = deliveryPrice.reduce(
+			(a, b) => a + b.delivery_price,
+			0
+		);
+
+		return {
+			totalDeliveryPrice: totalDeliveryPrice,
+			totalPriceSeller: totalPriceSeller,
+		};
+	};
+
+	const { totalDeliveryPrice, totalPriceSeller } = handletotalDelivery();
+
+	useEffect(() => {
+		handletotalDelivery();
+	}, [reRender]);
+
+	console.log(totalDeliveryPrice);
 	return (
 		<div className="bg-gray-100">
 			<Head>
@@ -59,6 +110,7 @@ const checkout: NextPage = () => {
 			</Head>
 			<Header />
 			<main className="lg:flex max-w-screen-xl mx-auto grid">
+				{/* Left */}
 				<div className="flex-grow m-2 md:m-5 shadow-md">
 					<div className="flex justify-between border-b border-gray-300">
 						<h1 className="text-xl md:text-2xl pb-4">
@@ -82,6 +134,17 @@ const checkout: NextPage = () => {
 								reference={item.reference}
 								handleCount={handleCount}
 							/>
+						))}
+						{totalPriceSeller.map((item, i) => (
+							<div key={i} className="text-right text-md">
+								{item.total < 50 && (
+									<p className="text-xs">{`Plus que ${(
+										50 - item.total
+									).toFixed(
+										2
+									)} € d'achat pour la livraison gratuite avec ce vendeur `}</p>
+								)}
+							</div>
 						))}
 					</div>
 				</div>
