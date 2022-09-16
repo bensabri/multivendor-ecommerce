@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import CheckoutProduct from '../components/Checkout/CheckoutProduct';
 import Header from '../components/Header/Header';
 import { useGlobalContext } from '../context/Context';
+import Currency from 'react-currency-formatter';
 
 const checkout: NextPage = () => {
 	const { productList } = useGlobalContext();
@@ -112,13 +113,15 @@ const checkout: NextPage = () => {
 			<main className="lg:flex max-w-screen-xl mx-auto grid">
 				{/* Left */}
 				<div className="flex-grow m-2 md:m-5 shadow-md">
-					<div className="flex justify-between border-b border-gray-300">
-						<h1 className="text-xl md:text-2xl pb-4">
-							{productList.length === 0
-								? 'Votre panier est vide'
-								: 'Détail de votre panier'}
-						</h1>
-						<h2 className="mt-5">Prix</h2>
+					<div className="flex flex-col p-5 space-y-4 bg-white rounded-md">
+						<div className="flex justify-between border-b border-gray-300">
+							<h1 className="text-xl md:text-2xl pb-4">
+								{productList.length === 0
+									? 'Votre panier est vide'
+									: 'Détail de votre panier'}
+							</h1>
+							<h2 className="mt-5">Prix</h2>
+						</div>
 						{productList.map((item, i) => (
 							<CheckoutProduct
 								i={i}
@@ -144,8 +147,33 @@ const checkout: NextPage = () => {
 										2
 									)} € d'achat pour la livraison gratuite avec ce vendeur `}</p>
 								)}
+								<span>{`Livraison: ${item.name}  `}</span>
+								{item.total >= 50 ? (
+									<span className="font-bold text-lg text-red-600 ml-2">
+										<Currency quantity={0} currency="EUR" />
+									</span>
+								) : (
+									<span className="font-bold text-lg text-red-600 ml-2">
+										<Currency
+											quantity={item.delivery_price}
+											currency="EUR"
+										/>
+									</span>
+								)}
 							</div>
 						))}
+						{productList.length === 0 && (
+							<p className="py-5 ">Aucun product</p>
+						)}
+						<p className="text-right text-xl">
+							Sous-total:
+							<span className="font-bold text-2xl text-red-600 ml-2">
+								<Currency
+									quantity={total + totalDeliveryPrice}
+									currency="EUR"
+								/>
+							</span>
+						</p>
 					</div>
 				</div>
 			</main>

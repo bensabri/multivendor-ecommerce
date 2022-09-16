@@ -66,7 +66,7 @@ const CheckoutProduct: FC<Iprops> = ({
 				objectFit="contain"
 				src={image}
 			/>
-			<div className="col-span-3 mx-5 ">
+			<div className="col-span-3 mx-5">
 				<p className="font-semibold line-clamp-1">{title}</p>
 				<div
 					dangerouslySetInnerHTML={{
