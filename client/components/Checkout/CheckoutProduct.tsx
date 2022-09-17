@@ -39,7 +39,7 @@ const CheckoutProduct: FC<Iprops> = ({
 	const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
 		return `http://localhost:1337${src}?w=${width}&q=${quality || 75}`;
 	};
-
+	console.log(productList);
 	// Remove product from the checkout list
 	const removeProduct = (id: number) => {
 		const removedProduct = productList.filter(
@@ -66,7 +66,7 @@ const CheckoutProduct: FC<Iprops> = ({
 				objectFit="contain"
 				src={image}
 			/>
-			<div className="col-span-3 mx-5">
+			<div className="col-span-3 mx-5 ">
 				<p className="font-semibold line-clamp-1">{title}</p>
 				<div
 					dangerouslySetInnerHTML={{

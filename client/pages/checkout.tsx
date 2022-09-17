@@ -52,15 +52,15 @@ const checkout: NextPage = () => {
 		setReRender(!reRender);
 	};
 
-	const getTotalSells = (name: string): number => {
-		// Get the total price amount per vendeur
-		let filterName = productList
-			.filter((item) => item.seller_name === name)
-			.reduce((a, b) => a + b.total, 0);
-		return filterName;
-	};
-
 	const handletotalDelivery = () => {
+		const getTotalSells = (name: string): number => {
+			// Get the total price amount per vendeur
+			let filterName = productList
+				.filter((item) => item.seller_name === name)
+				.reduce((a, b) => a + b.total, 0);
+			return filterName;
+		};
+
 		const uniqueSeller = [
 			...new Map(
 				productList.map((item) => [item['seller_name'], item.vendeur])
@@ -93,6 +93,7 @@ const checkout: NextPage = () => {
 		return {
 			totalDeliveryPrice: totalDeliveryPrice,
 			totalPriceSeller: totalPriceSeller,
+			deliveryPrice: deliveryPrice,
 		};
 	};
 
@@ -102,7 +103,8 @@ const checkout: NextPage = () => {
 		handletotalDelivery();
 	}, [reRender]);
 
-	console.log(totalDeliveryPrice);
+	// console.log(totalPriceSeller);
+	console.log(productList);
 	return (
 		<div className="bg-gray-100">
 			<Head>
