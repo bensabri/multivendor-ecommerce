@@ -39,7 +39,7 @@ const CheckoutProduct: FC<Iprops> = ({
 	const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
 		return `http://localhost:1337${src}?w=${width}&q=${quality || 75}`;
 	};
-	console.log(productList);
+
 	// Remove product from the checkout list
 	const removeProduct = (id: number) => {
 		const removedProduct = productList.filter(
@@ -48,6 +48,16 @@ const CheckoutProduct: FC<Iprops> = ({
 		setProductList(removedProduct);
 		setProduct(removedProduct);
 	};
+
+	// Update the total when incrementing the quantity
+	const updateTotal = () => {
+		const uptatedTotalQuantity = [...productList];
+		uptatedTotalQuantity[i].total = quantityCheckout * price;
+		setProductList(uptatedTotalQuantity);
+	};
+	useEffect(() => {
+		updateTotal();
+	}, [quantityCheckout]);
 
 	// Feed the select with stock from database
 	const dataSelect = Array(stock)
