@@ -13,6 +13,7 @@ import {
 	GetProductsQueryVariables,
 } from '../../generated';
 import { useRouter } from 'next/router';
+import AccountDetailHeader from './AccountDetailHeader';
 
 const Header: FC = () => {
 	const router = useRouter();
@@ -25,6 +26,7 @@ const Header: FC = () => {
 		setActiveCategory,
 	} = useGlobalContext();
 	const [inputSearch, setInputSearch] = useState<string>('');
+	const [user, setUser] = useState<boolean>(true);
 
 	const handleClick = () => {
 		setActiveTab(!activeTab);
@@ -92,16 +94,26 @@ const Header: FC = () => {
 					setInputSearch={setInputSearch}
 				/>
 				<div className="text-white  flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
-					<div>
-						<Link href="/" passHref>
-							<div className="cursor-pointer hover:underline">
-								<p className="font-bold md:text-sm">
-									Mon compte
-								</p>
-								<p>Identifiez-vous</p>
-							</div>
-						</Link>
-					</div>
+					{user ? (
+						//  && user.emailVerified === true
+						<div className="relative cursor-pointer group">
+							<p className="font-bold md:text-sm hover:underline">
+								Compte et listes
+							</p>
+							<AccountDetailHeader />
+						</div>
+					) : (
+						<div>
+							<Link href="/" passHref>
+								<div className="cursor-pointer hover:underline">
+									<p className="font-bold md:text-sm">
+										Mon compte
+									</p>
+									<p>Identifiez-vous</p>
+								</div>
+							</Link>
+						</div>
+					)}
 				</div>
 				<div
 					onClick={() => router.push('/checkout')}
