@@ -1863,6 +1863,16 @@ export type GetCategoriesQueryVariables = Exact<{
 
 export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', title?: string | null, slug?: string | null, products?: { __typename?: 'ProductRelationResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', category: Enum_Product_Category, description: string, price: number, stock: number, slug: string, seller_name: string, delivery_time?: number | null, title: string, reference: any, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> }, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null } | null }> } | null } | null }> } | null };
 
+export type GetOrdersQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  client_email?: InputMaybe<Scalars['String']>;
+  is_payed?: InputMaybe<Scalars['Boolean']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type GetOrdersQuery = { __typename?: 'Query', commandes?: { __typename?: 'CommandeEntityResponseCollection', data: Array<{ __typename?: 'CommandeEntity', id?: string | null, attributes?: { __typename?: 'Commande', order_id?: number | null, total?: number | null, is_payed?: boolean | null, total_delivery_price?: number | null, createdAt?: any | null, client_email?: string | null, status?: Array<{ __typename?: 'ComponentVendeurStatus', seller_email?: string | null, status?: Enum_Componentvendeurstatus_Status | null } | null> | null, client?: { __typename?: 'ComponentClientClients', lastname?: string | null, firstname: string, email: string, billing_address?: { __typename?: 'ComponentAddressAddress', address?: string | null, zip_code?: any | null, city?: string | null, country?: string | null } | null } | null, product?: Array<{ __typename?: 'ComponentProductProducts', id: string, category?: string | null, title?: string | null, price?: number | null, quantity?: number | null, total?: number | null, reference?: any | null, image?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null, vendeur?: { __typename?: 'ComponentVendeurVendeur', delivery_price?: number | null, seller_name?: string | null, seller_email?: string | null } | null } | null> | null } | null }> } | null };
+
 export type GetProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1968,6 +1978,94 @@ export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
 export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
 export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export const GetOrdersDocument = gql`
+    query getOrders($limit: Int, $client_email: String, $is_payed: Boolean, $sort: [String]) {
+  commandes(
+    pagination: {limit: $limit}
+    filters: {client_email: {eq: $client_email}, is_payed: {eq: $is_payed}}
+    sort: $sort
+  ) {
+    data {
+      id
+      attributes {
+        order_id
+        total
+        is_payed
+        total_delivery_price
+        createdAt
+        status {
+          seller_email
+          status
+        }
+        client_email
+        client {
+          lastname
+          firstname
+          email
+          billing_address {
+            address
+            zip_code
+            city
+            country
+          }
+        }
+        product {
+          id
+          category
+          title
+          price
+          quantity
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          total
+          reference
+          vendeur {
+            delivery_price
+            seller_name
+            seller_email
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      client_email: // value for 'client_email'
+ *      is_payed: // value for 'is_payed'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useGetOrdersQuery(baseOptions?: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+      }
+export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
+export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
+export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
 export const GetProductsDocument = gql`
     query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean) {
   products(

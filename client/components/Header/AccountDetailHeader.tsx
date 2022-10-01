@@ -8,7 +8,7 @@ const AccountDetailHeader = () => {
 			<div className="border-b cursor-pointer space-y-2">
 				<div className="hover:bg-gray-100">
 					<p
-						// onClick={() => router.push('/account')}
+						onClick={() => router.push('/account')}
 						className="text-black text-thin border-t p-2"
 					>
 						Mes commandes

@@ -1,0 +1,63 @@
+query getOrders(
+	$limit: Int
+	$client_email: String
+	$is_payed: Boolean
+	$sort: [String]
+) {
+	commandes(
+		pagination: { limit: $limit }
+		filters: {
+			client_email: { eq: $client_email }
+			is_payed: { eq: $is_payed }
+		}
+		sort: $sort
+	) {
+		data {
+			id
+			attributes {
+				order_id
+				total
+				is_payed
+				total_delivery_price
+				createdAt
+				status {
+					seller_email
+					status
+				}
+				client_email
+				client {
+					lastname
+					firstname
+					email
+					billing_address {
+						address
+						zip_code
+						city
+						country
+					}
+				}
+				product {
+					id
+					category
+					title
+					price
+					quantity
+					image {
+						data {
+							attributes {
+								url
+							}
+						}
+					}
+					total
+					reference
+					vendeur {
+						delivery_price
+						seller_name
+						seller_email
+					}
+				}
+			}
+		}
+	}
+}
