@@ -95,7 +95,7 @@
     "slug": {
       "type": "uid",
       "targetField": "title",
-      "required": true
+      "required": false
     },
     "Seo": {
       "displayName": "Seo",
