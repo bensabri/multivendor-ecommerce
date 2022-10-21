@@ -14,7 +14,6 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  I18NLocaleCode: any;
   JSON: any;
   Long: any;
   Upload: any;
@@ -47,21 +46,11 @@ export type BooleanFilterInput = {
 export type Category = {
   __typename?: 'Category';
   createdAt?: Maybe<Scalars['DateTime']>;
-  locale?: Maybe<Scalars['String']>;
-  localizations?: Maybe<CategoryRelationResponseCollection>;
   products?: Maybe<ProductRelationResponseCollection>;
   publishedAt?: Maybe<Scalars['DateTime']>;
   slug?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-
-export type CategoryLocalizationsArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -93,8 +82,6 @@ export type CategoryFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<CategoryFiltersInput>>>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   id?: InputMaybe<IdFilterInput>;
-  locale?: InputMaybe<StringFilterInput>;
-  localizations?: InputMaybe<CategoryFiltersInput>;
   not?: InputMaybe<CategoryFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<CategoryFiltersInput>>>;
   products?: InputMaybe<ProductFiltersInput>;
@@ -109,11 +96,6 @@ export type CategoryInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   slug?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
-};
-
-export type CategoryRelationResponseCollection = {
-  __typename?: 'CategoryRelationResponseCollection';
-  data: Array<CategoryEntity>;
 };
 
 export type Client = {
@@ -663,43 +645,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = Category | Client | Commande | CommandeVendeur | ComponentAddressAddress | ComponentAddressShippingAddress | ComponentClientAddress | ComponentClientClients | ComponentProductProducts | ComponentProductVendeur | ComponentSharedSeo | ComponentSharedShareImage | ComponentVendeurStatus | ComponentVendeurVendeur | I18NLocale | Product | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vendeur;
-
-export type I18NLocale = {
-  __typename?: 'I18NLocale';
-  code?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  name?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type I18NLocaleEntity = {
-  __typename?: 'I18NLocaleEntity';
-  attributes?: Maybe<I18NLocale>;
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type I18NLocaleEntityResponse = {
-  __typename?: 'I18NLocaleEntityResponse';
-  data?: Maybe<I18NLocaleEntity>;
-};
-
-export type I18NLocaleEntityResponseCollection = {
-  __typename?: 'I18NLocaleEntityResponseCollection';
-  data: Array<I18NLocaleEntity>;
-  meta: ResponseCollectionMeta;
-};
-
-export type I18NLocaleFiltersInput = {
-  and?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
-  code?: InputMaybe<StringFilterInput>;
-  createdAt?: InputMaybe<DateTimeFilterInput>;
-  id?: InputMaybe<IdFilterInput>;
-  name?: InputMaybe<StringFilterInput>;
-  not?: InputMaybe<I18NLocaleFiltersInput>;
-  or?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
-};
+export type GenericMorph = Category | Client | Commande | CommandeVendeur | ComponentAddressAddress | ComponentAddressShippingAddress | ComponentClientAddress | ComponentClientClients | ComponentProductProducts | ComponentProductVendeur | ComponentSharedSeo | ComponentSharedShareImage | ComponentVendeurStatus | ComponentVendeurVendeur | Product | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vendeur;
 
 export type IdFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -802,12 +748,10 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createCategory?: Maybe<CategoryEntityResponse>;
-  createCategoryLocalization?: Maybe<CategoryEntityResponse>;
   createClient?: Maybe<ClientEntityResponse>;
   createCommande?: Maybe<CommandeEntityResponse>;
   createCommandeVendeur?: Maybe<CommandeVendeurEntityResponse>;
   createProduct?: Maybe<ProductEntityResponse>;
-  createProductLocalization?: Maybe<ProductEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -864,14 +808,6 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateCategoryArgs = {
   data: CategoryInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
-};
-
-
-export type MutationCreateCategoryLocalizationArgs = {
-  data?: InputMaybe<CategoryInput>;
-  id?: InputMaybe<Scalars['ID']>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -892,14 +828,6 @@ export type MutationCreateCommandeVendeurArgs = {
 
 export type MutationCreateProductArgs = {
   data: ProductInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
-};
-
-
-export type MutationCreateProductLocalizationArgs = {
-  data?: InputMaybe<ProductInput>;
-  id?: InputMaybe<Scalars['ID']>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -930,7 +858,6 @@ export type MutationCreateVendeurArgs = {
 
 export type MutationDeleteCategoryArgs = {
   id: Scalars['ID'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -951,7 +878,6 @@ export type MutationDeleteCommandeVendeurArgs = {
 
 export type MutationDeleteProductArgs = {
   id: Scalars['ID'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -1023,7 +949,6 @@ export type MutationResetPasswordArgs = {
 export type MutationUpdateCategoryArgs = {
   data: CategoryInput;
   id: Scalars['ID'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -1054,7 +979,6 @@ export type MutationUpdateFileInfoArgs = {
 export type MutationUpdateProductArgs = {
   data: ProductInput;
   id: Scalars['ID'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -1120,13 +1044,11 @@ export type Product = {
   delivery_time?: Maybe<Scalars['Int']>;
   description: Scalars['String'];
   image: UploadFileRelationResponseCollection;
-  locale?: Maybe<Scalars['String']>;
-  localizations?: Maybe<ProductRelationResponseCollection>;
   price: Scalars['Float'];
   publishedAt?: Maybe<Scalars['DateTime']>;
   reference: Scalars['Long'];
   seller_name: Scalars['String'];
-  slug: Scalars['String'];
+  slug?: Maybe<Scalars['String']>;
   stock: Scalars['Int'];
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -1137,14 +1059,6 @@ export type Product = {
 export type ProductImageArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-export type ProductLocalizationsArgs = {
-  filters?: InputMaybe<ProductFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1174,8 +1088,6 @@ export type ProductFiltersInput = {
   delivery_time?: InputMaybe<IntFilterInput>;
   description?: InputMaybe<StringFilterInput>;
   id?: InputMaybe<IdFilterInput>;
-  locale?: InputMaybe<StringFilterInput>;
-  localizations?: InputMaybe<ProductFiltersInput>;
   not?: InputMaybe<ProductFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<ProductFiltersInput>>>;
   price?: InputMaybe<FloatFilterInput>;
@@ -1226,8 +1138,6 @@ export type Query = {
   commandeVendeur?: Maybe<CommandeVendeurEntityResponse>;
   commandeVendeurs?: Maybe<CommandeVendeurEntityResponseCollection>;
   commandes?: Maybe<CommandeEntityResponseCollection>;
-  i18NLocale?: Maybe<I18NLocaleEntityResponse>;
-  i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
   product?: Maybe<ProductEntityResponse>;
   products?: Maybe<ProductEntityResponseCollection>;
@@ -1246,7 +1156,6 @@ export type Query = {
 
 export type QueryCategoriesArgs = {
   filters?: InputMaybe<CategoryFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -1255,7 +1164,6 @@ export type QueryCategoriesArgs = {
 
 export type QueryCategoryArgs = {
   id?: InputMaybe<Scalars['ID']>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -1295,27 +1203,13 @@ export type QueryCommandesArgs = {
 };
 
 
-export type QueryI18NLocaleArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-};
-
-
-export type QueryI18NLocalesArgs = {
-  filters?: InputMaybe<I18NLocaleFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
 export type QueryProductArgs = {
   id?: InputMaybe<Scalars['ID']>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
 export type QueryProductsArgs = {
   filters?: InputMaybe<ProductFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -1861,7 +1755,7 @@ export type GetCategoriesQueryVariables = Exact<{
 }>;
 
 
-export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', title?: string | null, slug?: string | null, products?: { __typename?: 'ProductRelationResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', category: Enum_Product_Category, description: string, price: number, stock: number, slug: string, seller_name: string, delivery_time?: number | null, title: string, reference: any, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> }, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null } | null }> } | null } | null }> } | null };
+export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', title?: string | null, slug?: string | null, products?: { __typename?: 'ProductRelationResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', category: Enum_Product_Category, description: string, price: number, stock: number, slug?: string | null, seller_name: string, delivery_time?: number | null, title: string, reference: any, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> }, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null } | null }> } | null } | null }> } | null };
 
 export type GetOrdersQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -1882,7 +1776,14 @@ export type GetProductsQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug: string, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
+export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug?: string | null, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
+
+export type VendeursQueryVariables = Exact<{
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type VendeursQuery = { __typename?: 'Query', vendeurs?: { __typename?: 'VendeurEntityResponseCollection', data: Array<{ __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, delivery_price?: number | null, email?: string | null } | null }> } | null, categories?: { __typename?: 'CategoryEntityResponseCollection', data: Array<{ __typename?: 'CategoryEntity', attributes?: { __typename?: 'Category', title?: string | null } | null }> } | null };
 
 
 export const GetCategoriesDocument = gql`
@@ -2149,3 +2050,52 @@ export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
 export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
 export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
+export const VendeursDocument = gql`
+    query vendeurs($email: String) {
+  vendeurs(filters: {email: {eq: $email}}) {
+    data {
+      id
+      attributes {
+        name
+        delivery_price
+        email
+      }
+    }
+  }
+  categories {
+    data {
+      attributes {
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useVendeursQuery__
+ *
+ * To run a query within a React component, call `useVendeursQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVendeursQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVendeursQuery({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useVendeursQuery(baseOptions?: Apollo.QueryHookOptions<VendeursQuery, VendeursQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VendeursQuery, VendeursQueryVariables>(VendeursDocument, options);
+      }
+export function useVendeursLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VendeursQuery, VendeursQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VendeursQuery, VendeursQueryVariables>(VendeursDocument, options);
+        }
+export type VendeursQueryHookResult = ReturnType<typeof useVendeursQuery>;
+export type VendeursLazyQueryHookResult = ReturnType<typeof useVendeursLazyQuery>;
+export type VendeursQueryResult = Apollo.QueryResult<VendeursQuery, VendeursQueryVariables>;

@@ -1,0 +1,19 @@
+query vendeurs($email: String) {
+	vendeurs(filters: { email: { eq: $email } }) {
+		data {
+			id
+			attributes {
+				name
+				delivery_price
+				email
+			}
+		}
+	}
+	categories {
+		data {
+			attributes {
+				title
+			}
+		}
+	}
+}
