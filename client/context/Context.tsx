@@ -12,7 +12,21 @@ type Props = {
 	children: ReactNode;
 };
 
+export interface iInitialState {
+	chat: boolean;
+	cart: boolean;
+	userProfile: boolean;
+	notification: boolean;
+}
+
 const AppContext = createContext({} as Icontext);
+
+const initialState = {
+	chat: false,
+	cart: false,
+	userProfile: false,
+	notification: false,
+};
 
 const AppProvider = ({ children }: Props) => {
 	const [product, setProduct] = useState<IProductList[]>([]);
@@ -24,6 +38,19 @@ const AppProvider = ({ children }: Props) => {
 		'Articles Religieux, Parfun'
 	);
 	const [activePageCategory, setPageCategory] = useState(1); // active page pagination category page
+
+	{
+		/* Dashboard state */
+	}
+	const [activeMenu, setActiveMenu] = useState<boolean>(false);
+	const [isClicked, setIsClicked] = useState<iInitialState>(initialState);
+	const [screenSize, setScreenSize] = useState<number | undefined>(undefined);
+	{
+		/* Theme State */
+	}
+	const [currentColor, setCurrentColor] = useState<string>('#03C9D7');
+	const [currentMode, setCurrentMode] = useState<string>('Light');
+	const [themeSettings, setThemeSettings] = useState<boolean>(false);
 
 	const contextValue: Icontext = {
 		activeTab,
@@ -38,6 +65,18 @@ const AppProvider = ({ children }: Props) => {
 		setActiveCategory,
 		activePageCategory,
 		setPageCategory,
+		currentColor,
+		setCurrentColor,
+		currentMode,
+		setCurrentMode,
+		themeSettings,
+		setThemeSettings,
+		activeMenu,
+		setActiveMenu,
+		isClicked,
+		setIsClicked,
+		screenSize,
+		setScreenSize,
 	};
 
 	useEffect(() => {

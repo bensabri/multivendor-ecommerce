@@ -1778,6 +1778,22 @@ export type GetProductsQueryVariables = Exact<{
 
 export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug?: string | null, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
 
+export type CommandeVendeursQueryVariables = Exact<{
+  seller_email?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type CommandeVendeursQuery = { __typename?: 'Query', commandeVendeurs?: { __typename?: 'CommandeVendeurEntityResponseCollection', data: Array<{ __typename?: 'CommandeVendeurEntity', id?: string | null, attributes?: { __typename?: 'CommandeVendeur', total?: number | null, status: Enum_Commandevendeur_Status } | null }> } | null };
+
+export type ProductsQueryVariables = Exact<{
+  seller_name?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type ProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string } | null }> } | null };
+
 export type VendeursQueryVariables = Exact<{
   email?: InputMaybe<Scalars['String']>;
 }>;
@@ -2050,6 +2066,95 @@ export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
 export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
 export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
+export const CommandeVendeursDocument = gql`
+    query commandeVendeurs($seller_email: String, $limit: Int) {
+  commandeVendeurs(
+    filters: {seller_email: {eq: $seller_email}, createdAt: {gte: "2022-05-01T00:00:00.000Z", lte: "2022-06-30T23:59:00.000Z"}}
+    pagination: {limit: $limit}
+  ) {
+    data {
+      id
+      attributes {
+        total
+        status
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCommandeVendeursQuery__
+ *
+ * To run a query within a React component, call `useCommandeVendeursQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommandeVendeursQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommandeVendeursQuery({
+ *   variables: {
+ *      seller_email: // value for 'seller_email'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useCommandeVendeursQuery(baseOptions?: Apollo.QueryHookOptions<CommandeVendeursQuery, CommandeVendeursQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CommandeVendeursQuery, CommandeVendeursQueryVariables>(CommandeVendeursDocument, options);
+      }
+export function useCommandeVendeursLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommandeVendeursQuery, CommandeVendeursQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CommandeVendeursQuery, CommandeVendeursQueryVariables>(CommandeVendeursDocument, options);
+        }
+export type CommandeVendeursQueryHookResult = ReturnType<typeof useCommandeVendeursQuery>;
+export type CommandeVendeursLazyQueryHookResult = ReturnType<typeof useCommandeVendeursLazyQuery>;
+export type CommandeVendeursQueryResult = Apollo.QueryResult<CommandeVendeursQuery, CommandeVendeursQueryVariables>;
+export const ProductsDocument = gql`
+    query products($seller_name: String, $limit: Int) {
+  products(
+    filters: {seller_name: {eq: $seller_name}}
+    pagination: {limit: $limit}
+  ) {
+    data {
+      id
+      attributes {
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsQuery__
+ *
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsQuery({
+ *   variables: {
+ *      seller_name: // value for 'seller_name'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+      }
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
 export const VendeursDocument = gql`
     query vendeurs($email: String) {
   vendeurs(filters: {email: {eq: $email}}) {

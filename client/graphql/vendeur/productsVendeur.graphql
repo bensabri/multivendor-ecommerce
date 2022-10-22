@@ -1,0 +1,13 @@
+query products($seller_name: String, $limit: Int) {
+	products(
+		filters: { seller_name: { eq: $seller_name } }
+		pagination: { limit: $limit }
+	) {
+		data {
+			id
+			attributes {
+				title
+			}
+		}
+	}
+}

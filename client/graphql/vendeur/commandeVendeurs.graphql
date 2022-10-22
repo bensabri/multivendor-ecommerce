@@ -1,0 +1,25 @@
+query commandeVendeurs(
+	$seller_email: String
+	# $gte: String
+	# $lte: String
+	$limit: Int
+) {
+	commandeVendeurs(
+		filters: {
+			seller_email: { eq: $seller_email }
+			createdAt: {
+				gte: "2022-05-01T00:00:00.000Z"
+				lte: "2022-06-30T23:59:00.000Z"
+			}
+		}
+		pagination: { limit: $limit }
+	) {
+		data {
+			id
+			attributes {
+				total
+				status
+			}
+		}
+	}
+}
