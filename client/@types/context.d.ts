@@ -26,4 +26,6 @@ export interface Icontext {
 	setIsClicked: Dispatch<SetStateAction<iInitialState>>;
 	screenSize: number | undefined;
 	setScreenSize: Dispatch<SetStateAction<number | undefined>>;
+	handleClick: (clicked: string | number | symbol) => void;
+	initialState: iInitialState;
 }

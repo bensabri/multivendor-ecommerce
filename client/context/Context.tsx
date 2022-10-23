@@ -12,6 +12,8 @@ type Props = {
 	children: ReactNode;
 };
 
+const AppContext = createContext({} as Icontext);
+
 export interface iInitialState {
 	chat: boolean;
 	cart: boolean;
@@ -19,9 +21,7 @@ export interface iInitialState {
 	notification: boolean;
 }
 
-const AppContext = createContext({} as Icontext);
-
-const initialState = {
+export const initialState: iInitialState = {
 	chat: false,
 	cart: false,
 	userProfile: false,
@@ -52,6 +52,9 @@ const AppProvider = ({ children }: Props) => {
 	const [currentMode, setCurrentMode] = useState<string>('Light');
 	const [themeSettings, setThemeSettings] = useState<boolean>(false);
 
+	const handleClick = (clicked: string | number | symbol) =>
+		setIsClicked({ ...initialState, [clicked]: true });
+
 	const contextValue: Icontext = {
 		activeTab,
 		setActiveTab,
@@ -77,6 +80,8 @@ const AppProvider = ({ children }: Props) => {
 		setIsClicked,
 		screenSize,
 		setScreenSize,
+		handleClick,
+		initialState,
 	};
 
 	useEffect(() => {

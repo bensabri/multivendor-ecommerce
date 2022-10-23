@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useGlobalContext } from '../../../context/Context';
 import { useQuery } from '@apollo/client';
 import HeaderSeller from '../HeaderSeller';
+import Navbar from './Navbar';
 
 interface Iprops {
 	vendeur: VendeursQuery | undefined;
@@ -20,6 +21,8 @@ interface Iprops {
 const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 	const { activeMenu, currentColor, themeSettings, currentMode } =
 		useGlobalContext();
+
+	console.log(vendeur?.categories);
 
 	const router = useRouter();
 
@@ -83,7 +86,11 @@ const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 						? 'dark:bg-main-dark-bg bg-main-bg min-h-screen md:ml-72 w-full  '
 						: 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
 				}
-			></div>
+			>
+				<div className="fixed md:static  dark:bg-main-dark-bg navbar w-full ">
+					<Navbar />
+				</div>
+			</div>
 		</div>
 	);
 };

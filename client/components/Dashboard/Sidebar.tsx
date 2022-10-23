@@ -28,10 +28,13 @@ const Sidebar = () => {
 			{activeMenu && (
 				<>
 					<div className="flex justify-between items-center cursor-pointer">
-						<Link href="/" passHref onClick={handleCloseSideBar}>
-							<div className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
+						<Link href="/" passHref>
+							<div
+								onClick={handleCloseSideBar}
+								className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
+							>
 								<FiShoppingCart />
-								<span>Medinah store</span>
+								<span>Market place</span>
 							</div>
 						</Link>
 						<Tooltip label="Menu" withArrow>
