@@ -55,6 +55,18 @@ const AppProvider = ({ children }: Props) => {
 	const handleClick = (clicked: string | number | symbol) =>
 		setIsClicked({ ...initialState, [clicked]: true });
 
+	const handleSetColor = (color: string) => {
+		setCurrentColor(color);
+		localStorage.setItem('colorMode', color);
+		setThemeSettings(false);
+	};
+
+	const handleSetMode = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setCurrentMode(event.target.value);
+		localStorage.setItem('themeMode', event.target.value);
+		setThemeSettings(false);
+	};
+
 	const contextValue: Icontext = {
 		activeTab,
 		setActiveTab,
@@ -82,6 +94,8 @@ const AppProvider = ({ children }: Props) => {
 		setScreenSize,
 		handleClick,
 		initialState,
+		handleSetColor,
+		handleSetMode,
 	};
 
 	useEffect(() => {

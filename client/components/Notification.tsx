@@ -1,7 +1,9 @@
 import Button from './Dashboard/Button';
 import { MdOutlineCancel } from 'react-icons/md';
+import { useGlobalContext } from '../context/Context';
 
 const Notification = () => {
+	const { currentColor } = useGlobalContext();
 	return (
 		<div className="nav-item absolute right-5 md:right-40 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
 			<div className="flex justify-between items-center">
@@ -24,6 +26,20 @@ const Notification = () => {
 					size="2xl"
 					borderRadius="50%"
 				/>
+			</div>
+			<div className="mt-5 ">
+				<div className="dark:text-gray-200 flex justify-center">
+					<p>{`Aucune Notification`}</p>
+				</div>
+				<div className="mt-5">
+					<Button
+						color="white"
+						bgColor={currentColor}
+						text="See all notifications"
+						borderRadius="10px"
+						width="full"
+					/>
+				</div>
 			</div>
 		</div>
 	);

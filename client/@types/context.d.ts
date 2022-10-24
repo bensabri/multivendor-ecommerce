@@ -28,4 +28,6 @@ export interface Icontext {
 	setScreenSize: Dispatch<SetStateAction<number | undefined>>;
 	handleClick: (clicked: string | number | symbol) => void;
 	initialState: iInitialState;
+	handleSetColor: (color: string) => void;
+	handleSetMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

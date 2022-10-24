@@ -12,6 +12,8 @@ import {
 	VendeursQueryVariables,
 } from '../../../generated';
 import Chat from '../Chat';
+import Notification from '../../Notification';
+import UserProfile from '../UserProfile';
 
 interface iProps {
 	title: string;
@@ -117,7 +119,9 @@ const Navbar = () => {
 						<MdKeyboardArrowDown className="text-gray-400 text-14" />
 					</div>
 				</Tooltip>
-				{isClicked?.chat && <Chat />}
+				{isClicked.chat && <Chat />}
+				{isClicked.notification && <Notification />}
+				{isClicked.userProfile && <UserProfile vendeur={vendeur} />}
 			</div>
 		</div>
 	);
