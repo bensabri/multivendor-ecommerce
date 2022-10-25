@@ -37,7 +37,8 @@ const AppProvider = ({ children }: Props) => {
 		// categories fetch at first load using lazyquery
 		'Articles Religieux, Parfun'
 	);
-	const [activePageCategory, setPageCategory] = useState(1); // active page pagination category page
+	const [activePageCategory, setPageCategory] = useState<number>(1); // active page pagination category page
+	const [activePageProductSeller, setPageProductSeller] = useState(1); // active page pagination products seller page
 
 	{
 		/* Dashboard state */
@@ -96,6 +97,8 @@ const AppProvider = ({ children }: Props) => {
 		initialState,
 		handleSetColor,
 		handleSetMode,
+		activePageProductSeller,
+		setPageProductSeller,
 	};
 
 	useEffect(() => {

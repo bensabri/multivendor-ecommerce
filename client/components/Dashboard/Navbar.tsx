@@ -5,15 +5,15 @@ import { BsChatLeft } from 'react-icons/bs';
 import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { Tooltip } from '@mantine/core';
-import { useGlobalContext } from '../../../context/Context';
+import { useGlobalContext } from '../../context/Context';
 import {
 	VendeursDocument,
 	VendeursQuery,
 	VendeursQueryVariables,
-} from '../../../generated';
-import Chat from '../Chat';
-import Notification from '../../Notification';
-import UserProfile from '../UserProfile';
+} from '../../generated';
+import Chat from './Chat';
+import Notification from '../Notification';
+import UserProfile from './UserProfile';
 
 interface iProps {
 	title: string;

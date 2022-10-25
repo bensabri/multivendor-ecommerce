@@ -12,11 +12,11 @@ import { useRouter } from 'next/router';
 import { useGlobalContext } from '../../../context/Context';
 import { useQuery } from '@apollo/client';
 import HeaderSeller from '../HeaderSeller';
-import Navbar from './Navbar';
+import Navbar from '../Navbar';
 import ThemeSettings from '../../ThemeSettings';
 import { BsBoxSeam } from 'react-icons/bs';
 import { FiBarChart } from 'react-icons/fi';
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Tooltip } from 'recharts';
 
 interface Iprops {
 	vendeur: VendeursQuery | undefined;
@@ -184,10 +184,6 @@ const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 									))}
 								</div>
 								<div className="mt-8">
-									{/* <ResponsiveContainer
-										width="100%"
-										height="100%"
-									> */}
 									<PieChart width={300} height={300}>
 										<Pie
 											dataKey="value"
@@ -202,7 +198,6 @@ const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 										/>
 										<Tooltip />
 									</PieChart>
-									{/* </ResponsiveContainer> */}
 								</div>
 							</div>
 						</div>

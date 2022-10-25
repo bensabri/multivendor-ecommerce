@@ -1,6 +1,6 @@
 import { useGlobalContext } from '../context/Context';
 
-const ThemeSettings = () => {
+const ThemeSettings: React.FC = () => {
 	const {
 		handleSetColor,
 		handleSetMode,

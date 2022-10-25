@@ -30,4 +30,6 @@ export interface Icontext {
 	initialState: iInitialState;
 	handleSetColor: (color: string) => void;
 	handleSetMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	activePageProductSeller: number;
+	setPageProductSeller: Dispatch<SetStateAction<number>>;
 }
