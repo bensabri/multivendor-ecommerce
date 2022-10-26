@@ -1,0 +1,41 @@
+query productsSearch(
+	$limit: Int
+	$sort: [String]
+	$contains: String
+	$pageSize: Int
+	$page: Int
+	$email: String
+) {
+	products(
+		pagination: { limit: $limit, pageSize: $pageSize, page: $page }
+		filters: {
+			vendeur: { email: { eq: $email } }
+			title: { contains: $contains }
+		}
+		sort: $sort
+	) {
+		meta {
+			pagination {
+				total
+			}
+		}
+		data {
+			id
+			attributes {
+				seller_name
+				category
+				title
+				description
+				price
+				stock
+				image {
+					data {
+						attributes {
+							url
+						}
+					}
+				}
+			}
+		}
+	}
+}

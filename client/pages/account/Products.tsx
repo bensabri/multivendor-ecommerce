@@ -1,13 +1,27 @@
-import { Loader } from '@mantine/core';
+import { Loader, Tooltip } from '@mantine/core';
 import dynamic from 'next/dynamic';
 import { useGlobalContext } from '../../context/Context';
-import { useState } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+
 import {
+	DeleteProductDocument,
+	DeleteProductMutation,
+	DeleteProductMutationVariables,
+	ProductsSearchDocument,
+	ProductsSearchQuery,
+	ProductsSearchQueryVariables,
+	UpdateProductDocument,
+	UpdateProductMutation,
+	UpdateProductMutationVariables,
 	VendeursDocument,
 	VendeursQuery,
 	VendeursQueryVariables,
 } from '../../generated';
+import Image, { ImageLoaderProps } from 'next/image';
+import HeaderSeller from '../../components/Dashboard/HeaderSeller';
+import Navbar from '../../components/Dashboard/Navbar';
+import ThemeSettings from '../../components/ThemeSettings';
 
 const CreateProducts = dynamic(
 	() => {
@@ -52,9 +66,93 @@ const Products: React.FC = () => {
 		},
 	});
 
-	// const [getProducts, { data, loading }] = useLazyQuery()
+	const [getProducts, { data, loading }] = useLazyQuery<
+		ProductsSearchQuery,
+		ProductsSearchQueryVariables
+	>(ProductsSearchDocument, {
+		variables: {
+			sort: [filter],
+			email: 'vendeur1@ymail.com',
+			pageSize: productPerPage,
+			page: activePageProductSeller,
+		},
+	});
 
-	return <div>Products</div>;
+	// Mutation to Update the Price and the Stock
+	const [updateProduct, { data: dataUpt }] = useMutation<
+		UpdateProductMutation,
+		UpdateProductMutationVariables
+	>(UpdateProductDocument);
+
+	// Mutation to Delete the product
+	const [deleteProduct, { data: dataDeleted }] = useMutation<
+		DeleteProductMutation,
+		DeleteProductMutationVariables
+	>(DeleteProductDocument);
+
+	useEffect(() => {
+		getProducts();
+	}, []);
+
+	const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
+		return `http://localhost:1337${src}?w=${width}&q=${quality || 75}`;
+	};
+
+	const rows = data?.products?.data.map((item) => (
+		<tr key={item.id}>
+			<td>
+				<Image
+					className="rounded-full"
+					width={40}
+					height={40}
+					loader={myLoader}
+					objectFit="fill"
+					src={item.attributes?.image.data[0].attributes?.url!}
+				/>
+			</td>
+			<td title={item.attributes?.title} className="dark:text-gray-200">
+				{item.attributes?.title.substring(0, 17)}
+			</td>
+			<td className="dark:text-gray-200">
+				{item.attributes?.category.replaceAll('_', ' ')}
+			</td>
+			<td className="dark:text-gray-200">{item.attributes?.stock}</td>
+			<td className="dark:text-gray-200">{item.attributes?.price}</td>
+			<td className="dark:text-gray-200">
+				<Tooltip label="Modifier">test</Tooltip>
+			</td>
+		</tr>
+	));
+
+	return (
+		<>
+			{vendeur?.vendeurs?.data.length === 0 ? (
+				<div className="flex justify-center items-center h-screen">
+					<h2>Page non disponible</h2>{' '}
+				</div>
+			) : (
+				<div
+					className={`flex relative dark:bg-main-dark-bg ${
+						currentMode === 'Dark' ? 'dark' : ''
+					}`}
+				>
+					<HeaderSeller />
+					<div
+						className={
+							activeMenu
+								? 'dark:bg-main-dark-bg bg-main-bg min-h-screen md:ml-72 w-full  '
+								: 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
+						}
+					>
+						<div className="fixed md:static  dark:bg-main-dark-bg navbar w-full ">
+							<Navbar />
+						</div>
+						{themeSettings && <ThemeSettings />}
+					</div>
+				</div>
+			)}
+		</>
+	);
 };
 
 export default Products;

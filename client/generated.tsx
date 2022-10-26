@@ -1778,6 +1778,22 @@ export type GetProductsQueryVariables = Exact<{
 
 export type GetProductsQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string, reference: any, delivery_time?: number | null, stock: number, description: string, price: number, slug?: string | null, category: Enum_Product_Category, seller_name: string, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> } } | null }> } | null };
 
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct?: { __typename?: 'ProductEntityResponse', data?: { __typename?: 'ProductEntity', attributes?: { __typename?: 'Product', title: string } | null } | null } | null };
+
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['ID'];
+  price?: InputMaybe<Scalars['Float']>;
+  stock?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct?: { __typename?: 'ProductEntityResponse', data?: { __typename?: 'ProductEntity', attributes?: { __typename?: 'Product', title: string, price: number, stock: number } | null } | null } | null };
+
 export type CommandeVendeursQueryVariables = Exact<{
   seller_email?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1785,6 +1801,18 @@ export type CommandeVendeursQueryVariables = Exact<{
 
 
 export type CommandeVendeursQuery = { __typename?: 'Query', commandeVendeurs?: { __typename?: 'CommandeVendeurEntityResponseCollection', data: Array<{ __typename?: 'CommandeVendeurEntity', id?: string | null, attributes?: { __typename?: 'CommandeVendeur', total?: number | null, status: Enum_Commandevendeur_Status } | null }> } | null };
+
+export type ProductsSearchQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+  contains?: InputMaybe<Scalars['String']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ProductsSearchQuery = { __typename?: 'Query', products?: { __typename?: 'ProductEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', seller_name: string, category: Enum_Product_Category, title: string, description: string, price: number, stock: number, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null }> } } | null }> } | null };
 
 export type ProductsQueryVariables = Exact<{
   seller_name?: InputMaybe<Scalars['String']>;
@@ -2066,6 +2094,84 @@ export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
 export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
 export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
+export const DeleteProductDocument = gql`
+    mutation deleteProduct($id: ID!) {
+  deleteProduct(id: $id) {
+    data {
+      attributes {
+        title
+      }
+    }
+  }
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation updateProduct($id: ID!, $price: Float, $stock: Int) {
+  updateProduct(id: $id, data: {price: $price, stock: $stock}) {
+    data {
+      attributes {
+        title
+        price
+        stock
+      }
+    }
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      price: // value for 'price'
+ *      stock: // value for 'stock'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
 export const CommandeVendeursDocument = gql`
     query commandeVendeurs($seller_email: String, $limit: Int) {
   commandeVendeurs(
@@ -2111,6 +2217,72 @@ export function useCommandeVendeursLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type CommandeVendeursQueryHookResult = ReturnType<typeof useCommandeVendeursQuery>;
 export type CommandeVendeursLazyQueryHookResult = ReturnType<typeof useCommandeVendeursLazyQuery>;
 export type CommandeVendeursQueryResult = Apollo.QueryResult<CommandeVendeursQuery, CommandeVendeursQueryVariables>;
+export const ProductsSearchDocument = gql`
+    query productsSearch($limit: Int, $sort: [String], $contains: String, $pageSize: Int, $page: Int, $email: String) {
+  products(
+    pagination: {limit: $limit, pageSize: $pageSize, page: $page}
+    filters: {vendeur: {email: {eq: $email}}, title: {contains: $contains}}
+    sort: $sort
+  ) {
+    meta {
+      pagination {
+        total
+      }
+    }
+    data {
+      id
+      attributes {
+        seller_name
+        category
+        title
+        description
+        price
+        stock
+        image {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsSearchQuery__
+ *
+ * To run a query within a React component, call `useProductsSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsSearchQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      sort: // value for 'sort'
+ *      contains: // value for 'contains'
+ *      pageSize: // value for 'pageSize'
+ *      page: // value for 'page'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useProductsSearchQuery(baseOptions?: Apollo.QueryHookOptions<ProductsSearchQuery, ProductsSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsSearchQuery, ProductsSearchQueryVariables>(ProductsSearchDocument, options);
+      }
+export function useProductsSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsSearchQuery, ProductsSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsSearchQuery, ProductsSearchQueryVariables>(ProductsSearchDocument, options);
+        }
+export type ProductsSearchQueryHookResult = ReturnType<typeof useProductsSearchQuery>;
+export type ProductsSearchLazyQueryHookResult = ReturnType<typeof useProductsSearchLazyQuery>;
+export type ProductsSearchQueryResult = Apollo.QueryResult<ProductsSearchQuery, ProductsSearchQueryVariables>;
 export const ProductsDocument = gql`
     query products($seller_name: String, $limit: Int) {
   products(
