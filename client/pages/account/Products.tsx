@@ -22,6 +22,7 @@ import Image, { ImageLoaderProps } from 'next/image';
 import HeaderSeller from '../../components/Dashboard/HeaderSeller';
 import Navbar from '../../components/Dashboard/Navbar';
 import ThemeSettings from '../../components/ThemeSettings';
+import Header from '../../components/Dashboard/Header';
 
 const CreateProducts = dynamic(
 	() => {
@@ -148,6 +149,9 @@ const Products: React.FC = () => {
 							<Navbar />
 						</div>
 						{themeSettings && <ThemeSettings />}
+						<div className="m-2 md:m-10 mt-24 p-2 md:p-10 shadow bg-white rounded-3xl dark:bg-secondary-dark-bg">
+							<Header category="page" title="Produit" />
+						</div>
 					</div>
 				</div>
 			)}

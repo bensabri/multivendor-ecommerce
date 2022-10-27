@@ -183,7 +183,7 @@ const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 										</div>
 									))}
 								</div>
-								<div className="mt-8">
+								<div className="mt-8 z-10">
 									<PieChart width={300} height={300}>
 										<Pie
 											dataKey="value"

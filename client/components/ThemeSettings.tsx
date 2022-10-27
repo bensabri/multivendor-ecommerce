@@ -1,6 +1,8 @@
 import { useGlobalContext } from '../context/Context';
 import { MdOutlineCancel } from 'react-icons/md';
 import { themeColors } from '../data/dummy';
+import { Tooltip } from '@mantine/core';
+import { BsCheck } from 'react-icons/bs';
 
 const ThemeSettings: React.FC = () => {
 	const {
@@ -11,7 +13,7 @@ const ThemeSettings: React.FC = () => {
 		setThemeSettings,
 	} = useGlobalContext();
 	return (
-		<div className="bg-half-transparent w-screen fixed nav-item top-0 right-0">
+		<div className="z-20 bg-half-transparent w-screen fixed nav-item top-0 right-0">
 			<div className="float-right h-screen dark:text-gray-200 bg-white dark:bg-main-dark-bg w-400">
 				<div className="flex justify-between items-center p-4 ml-4">
 					<p className="font-semibold text-xl">Settings</p>
@@ -68,7 +70,33 @@ const ThemeSettings: React.FC = () => {
 				</div>
 				<div className="flex-col border-t-1 border-color p-4 ml-4">
 					<p className="font-semibold text-lg">Theme Colors</p>
-					<div className="flex gap-3">{/* {themeColors. } */}</div>
+					<div className="flex gap-3">
+						{themeColors.map((item, i) => (
+							<Tooltip key={i} label={item.name} withArrow>
+								<div
+									className="relative mt-2 cursor-pointer flex gap-5 items-center"
+									key={item.name}
+								>
+									<button
+										type="button"
+										className="h-10 w-10 rounded-full cursor-pointer"
+										style={{ backgroundColor: item.color }}
+										onClick={() => {
+											handleSetColor(item.color);
+										}}
+									>
+										<BsCheck
+											className={`ml-2 text-2xl text-white ${
+												item.color === currentColor
+													? 'block'
+													: 'hidden'
+											}`}
+										/>
+									</button>
+								</div>
+							</Tooltip>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
