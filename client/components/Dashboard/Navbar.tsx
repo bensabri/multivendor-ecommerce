@@ -119,9 +119,11 @@ const Navbar = () => {
 						<MdKeyboardArrowDown className="text-gray-400 text-14" />
 					</div>
 				</Tooltip>
-				{isClicked.chat && <Chat />}
-				{isClicked.notification && <Notification />}
-				{isClicked.userProfile && <UserProfile vendeur={vendeur} />}
+				{isClicked.chat ? <Chat /> : null}
+				{isClicked.notification ? <Notification /> : null}
+				{isClicked.userProfile ? (
+					<UserProfile vendeur={vendeur} />
+				) : null}
 			</div>
 		</div>
 	);

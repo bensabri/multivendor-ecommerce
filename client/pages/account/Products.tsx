@@ -1,8 +1,10 @@
-import { Loader, Tooltip } from '@mantine/core';
+import { Loader, Pagination, Table, Tooltip } from '@mantine/core';
 import dynamic from 'next/dynamic';
 import { useGlobalContext } from '../../context/Context';
 import { useState, useEffect } from 'react';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { PlusCircleIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 
 import {
 	DeleteProductDocument,
@@ -120,14 +122,14 @@ const Products: React.FC = () => {
 			<td className="dark:text-gray-200">{item.attributes?.stock}</td>
 			<td className="dark:text-gray-200">{item.attributes?.price}</td>
 			<td className="dark:text-gray-200">
-				<Tooltip label="Modifier">test</Tooltip>
+				{/* <Tooltip label="Modifier">test</Tooltip> */}
 			</td>
 		</tr>
 	));
 
 	return (
 		<>
-			{vendeur?.vendeurs?.data.length === 0 ? (
+			{vendeur?.vendeurs?.data.length === 1 ? (
 				<div className="flex justify-center items-center h-screen">
 					<h2>Page non disponible</h2>{' '}
 				</div>
@@ -151,6 +153,158 @@ const Products: React.FC = () => {
 						{themeSettings && <ThemeSettings />}
 						<div className="m-2 md:m-10 mt-24 p-2 md:p-10 shadow bg-white rounded-3xl dark:bg-secondary-dark-bg">
 							<Header category="page" title="Produit" />
+							<div className="flex justify-between items-center">
+								<div className="bg-white py-3 flex flex-col mb-6 dark:bg-secondary-dark-bg">
+									<label
+										htmlFor="search"
+										className="mb-1 text-xs sm:text-sm tracking-wide dark:text-gray-200"
+									>
+										Recherche
+									</label>
+									<div className="relative">
+										<input
+											id="search"
+											type="text"
+											value={search}
+											onChange={(e) => {
+												setSearch(e.target.value);
+												if (search?.length >= 2) {
+													getProducts({
+														variables: {
+															email: 'vendeur@ymail.com',
+															contains:
+																e.target.value,
+														},
+													});
+												}
+											}}
+											className="dark:bg-main-dark-bg text-gray-200 focus:border-green-400 focus:ring-green-500 text-sm sm:text-base placeholder-gray-500 pl-3 rounded-lg border border-gray-400  py-1 focus:outline-none"
+											placeholder="Chercher un produit"
+										/>
+									</div>
+								</div>
+								<Tooltip label="Ajouter un produit" withArrow>
+									<button
+										onClick={() => setOpen(true)}
+										type="button"
+										style={{
+											backgroundColor: currentColor,
+										}}
+										className={`rounded-full cursor-pointer p-2 lg:text-md font-normal text-white transition duration-150 ease-in`}
+									>
+										<PlusCircleIcon className="w-9" />
+									</button>
+								</Tooltip>
+							</div>
+							<CreateProducts
+								vendeur={vendeur}
+								open={open}
+								setOpen={setOpen}
+							/>
+							{loading ? (
+								<div className="flex justify-center items-center h-[30rem]">
+									<Loader color="gray" />
+								</div>
+							) : (
+								<div className="bg-white border p-5 dark:bg-secondary-dark-bg">
+									<Table verticalSpacing="md" fontSize="md">
+										<thead>
+											<tr>
+												<th>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg">
+														Image
+													</p>{' '}
+												</th>
+												<th>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg">
+														Titre
+													</p>{' '}
+												</th>
+												<th>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg">
+														Catégorie
+													</p>
+												</th>
+												<th
+													className="cursor-pointer"
+													onClick={() => {
+														setSortStock(
+															!sortStock
+														);
+														setFilter(
+															sortStock
+																? 'stock:asc'
+																: 'stock:desc'
+														);
+													}}
+												>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg flex items-center">
+														Stock
+														{sortStock ? (
+															<ChevronUpIcon className="w-4 ml-2" />
+														) : (
+															<ChevronDownIcon className="w-4 ml-2" />
+														)}
+													</p>
+												</th>
+												<th
+													className="cursor-pointer"
+													onClick={() => {
+														setSortPrice(
+															!sortPrice
+														);
+														setFilter(
+															sortPrice
+																? 'price:asc'
+																: 'price:desc'
+														);
+													}}
+												>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg flex items-center">
+														Prix{' '}
+														{sortPrice ? (
+															<ChevronUpIcon className="w-4 ml-2" />
+														) : (
+															<ChevronDownIcon className="w-4 ml-2" />
+														)}
+													</p>
+												</th>
+												<th>
+													<p className="text-gray-400 dark:text-gray-200 text-md md:text-lg">
+														Edit
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>{rows}</tbody>
+									</Table>
+								</div>
+							)}
+							<div className="py-5">
+								<Pagination
+									radius="lg"
+									total={Math.ceil(
+										data?.products?.meta.pagination.total! /
+											productPerPage
+									)} // get number of pages
+									page={activePageProductSeller} // Get the active page when click on page number
+									onChange={setPageProductSeller}
+									withEdges
+									position="center"
+									styles={{
+										item: {
+											backgroundColor: 'white',
+											color:
+												currentMode === 'Dark'
+													? 'white'
+													: 'black',
+											'&[data-active]': {
+												backgroundColor: currentColor,
+											},
+										},
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>

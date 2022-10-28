@@ -1,5 +1,6 @@
 import { Group, Text, Modal } from '@mantine/core';
 import { HiOutlinePhotograph } from 'react-icons/hi';
+import { VendeursQuery } from '../../../generated';
 
 export const dropzoneChildren = () => (
 	<Group
@@ -21,7 +22,13 @@ export const dropzoneChildren = () => (
 	</Group>
 );
 
-const CreateProducts = () => {
+interface iProps {
+	vendeur: VendeursQuery | undefined;
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CreateProducts = ({ vendeur, open, setOpen }: iProps) => {
 	return <div>CreateProducts</div>;
 };
 
