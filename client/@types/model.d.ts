@@ -33,7 +33,7 @@ export interface IProductsAttributes {
 		description: string;
 		price: number;
 		stock: number;
-		slug: string;
+		slug?: string | null;
 		seller_name: string;
 		delivery_time?: number | null;
 		title: string;

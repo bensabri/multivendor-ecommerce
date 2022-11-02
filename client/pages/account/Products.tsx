@@ -25,6 +25,7 @@ import HeaderSeller from '../../components/Dashboard/HeaderSeller';
 import Navbar from '../../components/Dashboard/Navbar';
 import ThemeSettings from '../../components/ThemeSettings';
 import Header from '../../components/Dashboard/Header';
+import EditProduct from '../../components/Dashboard/Seller/EditProduct';
 
 const CreateProducts = dynamic(
 	() => {
@@ -56,8 +57,8 @@ const Products: React.FC = () => {
 	const [sortStock, setSortStock] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>('');
 	const [filter, setFilter] = useState('price:asc');
-	const [price, setPrice] = useState<string>('');
-	const [stock, setStock] = useState<string>('');
+	const [price, setPrice] = useState<number>(0);
+	const [stock, setStock] = useState<number>(0);
 	const [open, setOpen] = useState<boolean>(false);
 
 	const { data: vendeur, loading: loadVend } = useQuery<
@@ -82,7 +83,7 @@ const Products: React.FC = () => {
 	});
 
 	// Mutation to Update the Price and the Stock
-	const [updateProduct, { data: dataUpt }] = useMutation<
+	const [updateProduct, { data: dataUpdatedProduct }] = useMutation<
 		UpdateProductMutation,
 		UpdateProductMutationVariables
 	>(UpdateProductDocument);
@@ -122,7 +123,25 @@ const Products: React.FC = () => {
 			<td className="dark:text-gray-200">{item.attributes?.stock}</td>
 			<td className="dark:text-gray-200">{item.attributes?.price}</td>
 			<td className="dark:text-gray-200">
-				{/* <Tooltip label="Modifier">test</Tooltip> */}
+				<Tooltip label="Modifier">
+					<EditProduct
+						dataUpdatedProduct={dataUpdatedProduct}
+						price={price}
+						setPrice={setPrice}
+						stock={stock}
+						setStock={setStock}
+						updateProduct={updateProduct}
+						deleteProduct={deleteProduct}
+						title={item.attributes?.title!}
+						description={item.attributes?.description!}
+						currentPrice={item.attributes?.price}
+						currentStock={item.attributes?.stock}
+						id={item.id!}
+						currentMode={currentMode}
+						currentColor={currentColor}
+						image={item.attributes?.image.data[0].attributes?.url}
+					/>
+				</Tooltip>
 			</td>
 		</tr>
 	));

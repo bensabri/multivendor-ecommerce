@@ -1388,6 +1388,11 @@
   resolved "https://registry.yarnpkg.com/@types/d3-color/-/d3-color-2.0.3.tgz#8bc4589073c80e33d126345542f588056511fe82"
   integrity sha512-+0EtEjBfKEDtH9Rk3u3kLOUXM5F+iZK+WvASPb0MhIZl8J8NUvGeZRwKCXl+P3HkYx5TdU4YtcibpqHkSR9n7w==
 
+"@types/d3-color@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/d3-color/-/d3-color-3.1.0.tgz#6594da178ded6c7c3842f3cc0ac84b156f12f2d4"
+  integrity sha512-HKuicPHJuvPgCD+np6Se9MQvS6OCbJmOjGvylzMJRlDwUXjKTTXs6Pwgk79O09Vj/ho3u1ofXnhFOaEWWPrlwA==
+
 "@types/d3-interpolate@^2.0.0":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/d3-interpolate/-/d3-interpolate-2.0.2.tgz#78eddf7278b19e48e8652603045528d46897aba0"
@@ -4378,7 +4383,7 @@ react-transition-group@4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@18.2.0:
+react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
