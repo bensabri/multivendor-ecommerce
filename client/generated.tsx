@@ -1767,6 +1767,22 @@ export type GetOrdersQueryVariables = Exact<{
 
 export type GetOrdersQuery = { __typename?: 'Query', commandes?: { __typename?: 'CommandeEntityResponseCollection', data: Array<{ __typename?: 'CommandeEntity', id?: string | null, attributes?: { __typename?: 'Commande', order_id?: number | null, total?: number | null, is_payed?: boolean | null, total_delivery_price?: number | null, createdAt?: any | null, client_email?: string | null, status?: Array<{ __typename?: 'ComponentVendeurStatus', seller_email?: string | null, status?: Enum_Componentvendeurstatus_Status | null } | null> | null, client?: { __typename?: 'ComponentClientClients', lastname?: string | null, firstname: string, email: string, billing_address?: { __typename?: 'ComponentAddressAddress', address?: string | null, zip_code?: any | null, city?: string | null, country?: string | null } | null } | null, product?: Array<{ __typename?: 'ComponentProductProducts', id: string, category?: string | null, title?: string | null, price?: number | null, quantity?: number | null, total?: number | null, reference?: any | null, image?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null, vendeur?: { __typename?: 'ComponentVendeurVendeur', delivery_price?: number | null, seller_name?: string | null, seller_email?: string | null } | null } | null> | null } | null }> } | null };
 
+export type CreateProductMutationVariables = Exact<{
+  title: Scalars['String'];
+  description: Scalars['String'];
+  image?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
+  vendeur?: InputMaybe<Scalars['ID']>;
+  price?: InputMaybe<Scalars['Float']>;
+  delivery_time?: InputMaybe<Scalars['Int']>;
+  category?: InputMaybe<Enum_Product_Category>;
+  seller_name?: InputMaybe<Scalars['String']>;
+  stock?: InputMaybe<Scalars['Int']>;
+  reference?: InputMaybe<Scalars['Long']>;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct?: { __typename?: 'ProductEntityResponse', data?: { __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', title: string } | null } | null } | null };
+
 export type GetProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2011,6 +2027,55 @@ export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
 export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
 export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
+export const CreateProductDocument = gql`
+    mutation createProduct($title: String!, $description: String!, $image: [ID], $vendeur: ID, $price: Float, $delivery_time: Int, $category: ENUM_PRODUCT_CATEGORY, $seller_name: String, $stock: Int, $reference: Long) {
+  createProduct(
+    data: {title: $title, description: $description, image: $image, vendeur: $vendeur, price: $price, delivery_time: $delivery_time, category: $category, seller_name: $seller_name, stock: $stock, reference: $reference}
+  ) {
+    data {
+      id
+      attributes {
+        title
+      }
+    }
+  }
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+
+/**
+ * __useCreateProductMutation__
+ *
+ * To run a mutation, you first call `useCreateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductMutation, { data, loading, error }] = useCreateProductMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      description: // value for 'description'
+ *      image: // value for 'image'
+ *      vendeur: // value for 'vendeur'
+ *      price: // value for 'price'
+ *      delivery_time: // value for 'delivery_time'
+ *      category: // value for 'category'
+ *      seller_name: // value for 'seller_name'
+ *      stock: // value for 'stock'
+ *      reference: // value for 'reference'
+ *   },
+ * });
+ */
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const GetProductsDocument = gql`
     query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean) {
   products(

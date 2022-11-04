@@ -1,0 +1,34 @@
+mutation createProduct(
+	$title: String!
+	$description: String!
+	$image: [ID]
+	$vendeur: ID
+	$price: Float
+	$delivery_time: Int
+	$category: ENUM_PRODUCT_CATEGORY
+	$seller_name: String
+	$stock: Int
+	$reference: Long
+) {
+	createProduct(
+		data: {
+			title: $title
+			description: $description
+			image: $image
+			vendeur: $vendeur
+			price: $price
+			delivery_time: $delivery_time
+			category: $category
+			seller_name: $seller_name
+			stock: $stock
+			reference: $reference
+		}
+	) {
+		data {
+			id
+			attributes {
+				title
+			}
+		}
+	}
+}

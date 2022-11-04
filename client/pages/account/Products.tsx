@@ -56,7 +56,7 @@ const Products: React.FC = () => {
 	const [sortPrice, setSortPrice] = useState<boolean>(false);
 	const [sortStock, setSortStock] = useState<boolean>(false);
 	const [search, setSearch] = useState<string>('');
-	const [filter, setFilter] = useState('price:asc');
+	const [filter, setFilter] = useState<string>('price:asc');
 	const [price, setPrice] = useState<number>(0);
 	const [stock, setStock] = useState<number>(0);
 	const [open, setOpen] = useState<boolean>(false);
@@ -190,14 +190,14 @@ const Products: React.FC = () => {
 												if (search?.length >= 2) {
 													getProducts({
 														variables: {
-															email: 'vendeur@ymail.com',
+															email: 'vendeur1@ymail.com',
 															contains:
 																e.target.value,
 														},
 													});
 												}
 											}}
-											className="dark:bg-main-dark-bg text-gray-200 focus:border-green-400 focus:ring-green-500 text-sm sm:text-base placeholder-gray-500 pl-3 rounded-lg border border-gray-400  py-1 focus:outline-none"
+											className="dark:bg-main-dark-bg text-gray-800 focus:border-green-400 focus:ring-green-500 text-sm sm:text-base placeholder-gray-500 pl-3 rounded-lg border border-gray-400  py-1 focus:outline-none"
 											placeholder="Chercher un produit"
 										/>
 									</div>

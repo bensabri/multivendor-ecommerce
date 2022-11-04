@@ -46,8 +46,8 @@ const EditProduct = ({
 	currentColor,
 	image,
 }: iProps) => {
-	const [opened, setOpened] = useState(false);
-	const [openedSecond, setOpenedSecond] = useState(false);
+	const [opened, setOpened] = useState<boolean>(false);
+	const [openedSecond, setOpenedSecond] = useState<boolean>(false);
 
 	// Vendeur can change the price and stock of the product
 

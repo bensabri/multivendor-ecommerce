@@ -1,6 +1,9 @@
 import { Group, Text, Modal } from '@mantine/core';
 import { HiOutlinePhotograph } from 'react-icons/hi';
+import { useGlobalContext } from '../../../context/Context';
 import { VendeursQuery } from '../../../generated';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 export const dropzoneChildren = () => (
 	<Group
@@ -29,6 +32,28 @@ interface iProps {
 }
 
 const CreateProducts = ({ vendeur, open, setOpen }: iProps) => {
+	const { currentColor, currentMode } = useGlobalContext();
+	const [selectedImage, setSelectedImage] = useState<File[]>();
+	const [opened, setOpened] = useState<boolean>(false);
+	const [value, setValue] = useState<string>('');
+
+	const { handleSubmit, formState, register, watch, control, reset } =
+		useForm({
+			mode: 'onTouched',
+			defaultValues: {
+				title: '',
+				reference: '',
+				price: '',
+				category: '',
+				seller_name: '',
+				stock: '',
+				delivery_time: '',
+			},
+		});
+	const { isSubmitting, errors } = formState;
+
+	// Post products to the database with vendeur signature
+
 	return <div>CreateProducts</div>;
 };
 
