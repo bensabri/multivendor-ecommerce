@@ -27,9 +27,9 @@ import ThemeSettings from '../../components/ThemeSettings';
 import Header from '../../components/Dashboard/Header';
 import EditProduct from '../../components/Dashboard/Seller/EditProduct';
 
-const CreateProducts = dynamic(
+const AddProduct = dynamic(
 	() => {
-		return import('../../components/Dashboard/Seller/CreateProducts');
+		return import('../../components/Dashboard/Seller/AddProduct');
 	},
 	{
 		ssr: false,
@@ -66,7 +66,7 @@ const Products: React.FC = () => {
 		VendeursQueryVariables
 	>(VendeursDocument, {
 		variables: {
-			email: 'vendeurs@mail.com',
+			email: 'vendeur1@ymail.com',
 		},
 	});
 
@@ -148,7 +148,7 @@ const Products: React.FC = () => {
 
 	return (
 		<>
-			{vendeur?.vendeurs?.data.length === 1 ? (
+			{vendeur?.vendeurs?.data.length === 0 ? (
 				<div className="flex justify-center items-center h-screen">
 					<h2>Page non disponible</h2>{' '}
 				</div>
@@ -215,7 +215,7 @@ const Products: React.FC = () => {
 									</button>
 								</Tooltip>
 							</div>
-							<CreateProducts
+							<AddProduct
 								vendeur={vendeur}
 								open={open}
 								setOpen={setOpen}
