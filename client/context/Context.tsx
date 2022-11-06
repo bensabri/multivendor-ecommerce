@@ -50,7 +50,7 @@ const AppProvider = ({ children }: Props) => {
 		/* Theme State */
 	}
 	const [currentColor, setCurrentColor] = useState<string>('#03C9D7');
-	const [currentMode, setCurrentMode] = useState<string>('Light');
+	const [currentMode, setCurrentMode] = useState<string>('Dark');
 	const [themeSettings, setThemeSettings] = useState<boolean>(false);
 
 	const handleClick = (clicked: string | number | symbol) =>

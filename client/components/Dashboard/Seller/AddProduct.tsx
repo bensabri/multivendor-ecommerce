@@ -10,6 +10,8 @@ import {
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
+import Header from '../Header';
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 export const dropzoneChildren = () => (
 	<Group
@@ -32,7 +34,7 @@ export const dropzoneChildren = () => (
 );
 
 interface iProps {
-	vendeur: VendeursQuery | undefined;
+	vendeur?: VendeursQuery;
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -89,9 +91,46 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 	};
 	return (
 		<div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<button>Validé</button>
-			</form>
+			<Modal
+				size="xl"
+				opened={open}
+				closeOnClickOutside={false}
+				onClose={() => setOpen(false)}
+				classNames={{
+					modal: `bg-main-bg ${
+						currentMode === 'Dark' ? 'bg-secondary-dark-bg' : ''
+					}`,
+				}}
+			>
+				<div
+					className={`px-[7rem] dark:bg-main-dark-bg ${
+						currentMode === 'Dark' ? 'dark' : ''
+					}`}
+				>
+					<Modal
+						opened={opened}
+						onClose={() => setOpened(false)}
+						withCloseButton={false}
+					>
+						Votre produit à bien étais ajouté il sera validé par
+						notre équipe
+					</Modal>
+					<Header category="page" title="Ajouter un produit" />
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<Controller
+							control={control}
+							name="images"
+							rules={{
+								required: true,
+							}}
+							render={({ field: { onChange, value } }) => (
+								<div></div>
+							)}
+						></Controller>
+						<button>Validé</button>
+					</form>
+				</div>
+			</Modal>
 		</div>
 	);
 };

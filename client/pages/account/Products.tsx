@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { PlusCircleIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
-
+import { PencilIcon } from '@heroicons/react/solid';
 import {
 	DeleteProductDocument,
 	DeleteProductMutation,
@@ -114,7 +114,10 @@ const Products: React.FC = () => {
 					src={item.attributes?.image.data[0].attributes?.url!}
 				/>
 			</td>
-			<td title={item.attributes?.title} className="dark:text-gray-200">
+			<td
+				title={item.attributes?.title}
+				className="dark:text-gray-200 capitalize"
+			>
 				{item.attributes?.title.substring(0, 17)}
 			</td>
 			<td className="dark:text-gray-200">
@@ -123,25 +126,23 @@ const Products: React.FC = () => {
 			<td className="dark:text-gray-200">{item.attributes?.stock}</td>
 			<td className="dark:text-gray-200">{item.attributes?.price}</td>
 			<td className="dark:text-gray-200">
-				<Tooltip label="Modifier">
-					<EditProduct
-						dataUpdatedProduct={dataUpdatedProduct}
-						price={price}
-						setPrice={setPrice}
-						stock={stock}
-						setStock={setStock}
-						updateProduct={updateProduct}
-						deleteProduct={deleteProduct}
-						title={item.attributes?.title!}
-						description={item.attributes?.description!}
-						currentPrice={item.attributes?.price}
-						currentStock={item.attributes?.stock}
-						id={item.id!}
-						currentMode={currentMode}
-						currentColor={currentColor}
-						image={item.attributes?.image.data[0].attributes?.url}
-					/>
-				</Tooltip>
+				<EditProduct
+					dataUpdatedProduct={dataUpdatedProduct}
+					price={price}
+					setPrice={setPrice}
+					stock={stock}
+					setStock={setStock}
+					updateProduct={updateProduct}
+					deleteProduct={deleteProduct}
+					title={item.attributes?.title!}
+					description={item.attributes?.description!}
+					currentPrice={item.attributes?.price}
+					currentStock={item.attributes?.stock}
+					id={item.id!}
+					currentMode={currentMode}
+					currentColor={currentColor}
+					image={item.attributes?.image.data[0].attributes?.url}
+				/>
 			</td>
 		</tr>
 	));

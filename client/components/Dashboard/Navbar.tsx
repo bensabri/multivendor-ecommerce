@@ -20,7 +20,7 @@ interface iProps {
 	customFunc: () => void;
 	icon: JSX.Element;
 	color: string;
-	dotColor: string;
+	dotColor?: string;
 }
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }: iProps) => (
@@ -83,7 +83,6 @@ const Navbar = () => {
 				}
 				color={currentColor}
 				icon={<AiOutlineMenu />}
-				dotColor=""
 			/>
 			<div className="flex">
 				<NavButton
