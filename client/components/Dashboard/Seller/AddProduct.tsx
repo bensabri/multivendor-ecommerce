@@ -12,8 +12,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import Header from '../Header';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import axios from 'axios';
 
-export const dropzoneChildren = () => (
+export const dropzoneChildren: React.FC = () => (
 	<Group
 		position="center"
 		spacing="xl"
@@ -47,7 +48,7 @@ interface FormData {
 	seller_name: string;
 	stock: string;
 	delivery_time: string;
-	images: string;
+	images: string[];
 }
 
 const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
@@ -67,7 +68,7 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 				seller_name: '',
 				stock: '',
 				delivery_time: '',
-				images: '',
+				images: [''],
 			},
 		});
 	const { isSubmitting, errors } = formState;
@@ -84,10 +85,27 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 	);
 
 	const formDataImg = new FormData();
+	console.log(process.env.NEXT_PUBLIC_HOST);
 
 	const onSubmit = async (data: FormData) => {
 		const files = data.images;
 		console.log(files);
+
+		for (const file of files) {
+			formDataImg.append('files', file);
+		}
+		// Upload files to database
+		axios
+			.post(`${process.env.NEXT_PUBLIC_HOST}/api/upload`, formDataImg)
+			.then(() => {
+				reset();
+				setSelectedImage([]);
+				setValue('');
+				setOpened(true);
+			})
+			.catch((error) => {
+				console.log(`Error creating produit ${error}`);
+			});
 	};
 	return (
 		<div>
@@ -124,7 +142,25 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 								required: true,
 							}}
 							render={({ field: { onChange, value } }) => (
-								<div></div>
+								<div>
+									<Dropzone
+										// loading={loading}
+										className="dark:bg-main-dark-bg dark:text-gray-200"
+										onDrop={(data) => {
+											console.log('accepted files', data);
+											onChange(data);
+											setSelectedImage(data);
+										}}
+										onReject={(data) =>
+											console.log('rejected files', data)
+										}
+										maxSize={1000000}
+										accept={IMAGE_MIME_TYPE}
+										// value={value}
+									>
+										{(status) => dropzoneChildren(status)}
+									</Dropzone>
+								</div>
 							)}
 						></Controller>
 						<button>Validé</button>
