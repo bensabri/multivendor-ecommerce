@@ -13,8 +13,9 @@ import { useMutation } from '@apollo/client';
 import Header from '../Header';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import axios from 'axios';
+import Image from 'next/image';
 
-export const dropzoneChildren: React.FC = () => (
+export const dropzoneChildren = () => (
 	<Group
 		position="center"
 		spacing="xl"
@@ -48,7 +49,7 @@ interface FormData {
 	seller_name: string;
 	stock: string;
 	delivery_time: string;
-	images: string[];
+	images: File[];
 }
 
 const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
@@ -68,7 +69,7 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 				seller_name: '',
 				stock: '',
 				delivery_time: '',
-				images: [''],
+				images: [],
 			},
 		});
 	const { isSubmitting, errors } = formState;
@@ -85,7 +86,6 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 	);
 
 	const formDataImg = new FormData();
-	console.log(process.env.NEXT_PUBLIC_HOST);
 
 	const onSubmit = async (data: FormData) => {
 		const files = data.images;
@@ -156,13 +156,63 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 										}
 										maxSize={1000000}
 										accept={IMAGE_MIME_TYPE}
-										// value={value}
 									>
-										{(status) => dropzoneChildren(status)}
+										<Group
+											position="center"
+											spacing="xl"
+											style={{
+												minHeight: 220,
+												pointerEvents: 'none',
+											}}
+										>
+											<HiOutlinePhotograph />
+
+											<div>
+												<Text size="xl" inline>
+													Drag images here or click to
+													select files
+												</Text>
+												<Text
+													size="sm"
+													color="dimmed"
+													inline
+													mt={7}
+												>
+													Attach as many files as you
+													like, each file should not
+													exceed 1mb
+												</Text>
+											</div>
+										</Group>
 									</Dropzone>
+									{selectedImage && (
+										<button
+											className="dark:text-gray-200"
+											onClick={() => {
+												setSelectedImage([]);
+												onChange();
+											}}
+										>
+											Clear
+										</button>
+									)}
 								</div>
 							)}
-						></Controller>
+						/>
+						{errors.images && (
+							<p className="text-xs text-red-500">
+								Vous devez ajoutez au minimun une image
+							</p>
+						)}
+						{selectedImage?.map((item, i) => (
+							<Image
+								key={i}
+								src={URL.createObjectURL(item)}
+								width={100}
+								height={100}
+								objectFit="contain"
+							/>
+						))}
 						<button>Validé</button>
 					</form>
 				</div>
