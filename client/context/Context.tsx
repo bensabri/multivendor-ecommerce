@@ -14,12 +14,12 @@ type Props = {
 
 const AppContext = createContext({} as Icontext);
 
-export interface iInitialState {
+export type iInitialState = {
 	chat: boolean;
 	cart: boolean;
 	userProfile: boolean;
 	notification: boolean;
-}
+};
 
 export const initialState: iInitialState = {
 	chat: false,

@@ -2,14 +2,14 @@ import { Enum_Product_Category } from '../generated';
 
 // ProductList types //
 
-export interface IproductListVendeur {
+export type IproductListVendeur = {
 	name: string;
 	email: string;
 	delivery_price: number;
 	suspended: boolean;
-}
+};
 
-export interface IProductList {
+export type IProductList = {
 	id: string | null | undefined;
 	category: string;
 	title: string;
@@ -24,9 +24,9 @@ export interface IProductList {
 	delivery_time: number;
 	reference: number;
 	[];
-}
+};
 
-export interface IProductsAttributes {
+export type IProductsAttributes = {
 	attributes?: {
 		__typename?: 'Product';
 		category: Enum_Product_Category;
@@ -68,7 +68,7 @@ export interface IProductsAttributes {
 			}>;
 		};
 	} | null;
-}
+};
 
 export const defaultState = {
 	clients: '',

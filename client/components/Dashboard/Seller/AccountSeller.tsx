@@ -18,9 +18,9 @@ import { BsBoxSeam } from 'react-icons/bs';
 import { FiBarChart } from 'react-icons/fi';
 import { PieChart, Pie, Tooltip } from 'recharts';
 
-interface Iprops {
+type Iprops = {
 	vendeur: VendeursQuery | undefined;
-}
+};
 
 const AccountSeller: FC<Iprops> = ({ vendeur }) => {
 	const { activeMenu, currentColor, themeSettings, currentMode } =

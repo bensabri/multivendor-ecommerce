@@ -1,7 +1,7 @@
 import { iInitialState } from '../context/Context';
 import { IProductList } from './model';
 
-export interface Icontext {
+export type Icontext = {
 	activeTab: boolean;
 	setActiveTab: Dispatch<SetStateAction<boolean>>;
 	productList: IProductList[];
@@ -32,4 +32,4 @@ export interface Icontext {
 	handleSetMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	activePageProductSeller: number;
 	setPageProductSeller: Dispatch<SetStateAction<number>>;
-}
+};

@@ -17,9 +17,9 @@ import {
 } from '../../generated';
 import Footer from '../../components/Footer/Footer';
 
-interface Idata {
+type Idata = {
 	data: GetProductsQuery;
-}
+};
 
 const ProductDetail: NextPage<Idata> = ({ data }) => {
 	const { product, setProduct } = useGlobalContext();

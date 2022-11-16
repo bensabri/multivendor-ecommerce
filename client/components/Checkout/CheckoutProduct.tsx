@@ -5,7 +5,7 @@ import Currency from 'react-currency-formatter';
 import { IproductListVendeur } from '../../@types/model';
 import { useGlobalContext } from '../../context/Context';
 
-interface Iprops {
+type Iprops = {
 	i: number;
 	key: string | null | undefined;
 	category: string;
@@ -18,7 +18,7 @@ interface Iprops {
 	image: string;
 	reference: number;
 	handleCount: () => void;
-}
+};
 
 const CheckoutProduct: FC<Iprops> = ({
 	category,

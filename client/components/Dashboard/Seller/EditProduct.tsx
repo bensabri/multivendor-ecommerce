@@ -11,7 +11,7 @@ import {
 import Header from '../Header';
 import { PencilIcon } from '@heroicons/react/solid';
 
-interface iProps {
+type iProps = {
 	dataUpdatedProduct: UpdateProductMutation | null | undefined;
 	price: number;
 	setPrice: React.Dispatch<React.SetStateAction<number>>;
@@ -27,7 +27,7 @@ interface iProps {
 	currentMode: string;
 	currentColor: string;
 	image?: string;
-}
+};
 
 const EditProduct = ({
 	dataUpdatedProduct,

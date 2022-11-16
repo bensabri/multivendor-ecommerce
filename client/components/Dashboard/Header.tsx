@@ -1,7 +1,7 @@
-interface iProps {
+type iProps = {
 	category: string;
 	title: string;
-}
+};
 
 const Header = ({ category, title }: iProps) => {
 	return (

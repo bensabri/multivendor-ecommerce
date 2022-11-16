@@ -15,13 +15,13 @@ import Chat from './Chat';
 import Notification from '../Notification';
 import UserProfile from './UserProfile';
 
-interface iProps {
+type iProps = {
 	title: string;
 	customFunc: () => void;
 	icon: JSX.Element;
 	color: string;
 	dotColor?: string;
-}
+};
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }: iProps) => (
 	<Tooltip label={title} withArrow>

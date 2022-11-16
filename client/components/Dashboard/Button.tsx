@@ -1,6 +1,6 @@
 import { useGlobalContext } from '../../context/Context';
 
-interface iProps {
+type iProps = {
 	icon?: JSX.Element;
 	color?: string;
 	bgHoverColor?: string;
@@ -9,7 +9,7 @@ interface iProps {
 	width?: string;
 	text?: string;
 	bgColor?: string;
-}
+};
 
 const Button = ({
 	icon,

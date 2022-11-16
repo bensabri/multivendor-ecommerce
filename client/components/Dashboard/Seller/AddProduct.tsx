@@ -17,13 +17,13 @@ import Image from 'next/image';
 import { stripHtml } from 'string-strip-html';
 import { RichTextEditor } from '@mantine/rte';
 
-interface iProps {
+type iProps = {
 	vendeur?: VendeursQuery;
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-interface FormData {
+type FormData = {
 	title: string;
 	description: string;
 	reference: string;
@@ -33,7 +33,7 @@ interface FormData {
 	stock: string;
 	delivery_time: string;
 	images: File[];
-}
+};
 
 const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 	const { currentColor, currentMode } = useGlobalContext();
