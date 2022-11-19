@@ -14,6 +14,7 @@ import {
 } from '../../generated';
 import { useRouter } from 'next/router';
 import AccountDetailHeader from './AccountDetailHeader';
+import CartDetailHeader from './CartDetailHeader';
 
 const Header: FC = () => {
 	const router = useRouter();
@@ -120,13 +121,12 @@ const Header: FC = () => {
 					className="relative py-2 cursor-pointer hover:underline flex items-center group text-white"
 				>
 					<ShoppingCartIcon className="h-10" />
-
 					<div className="px-2">
 						<p className="font-bold md:text-sm">Panier</p>
 						<p className="text-xs">{productList?.length} article</p>
 					</div>
 					{/* Hover cart icon show the basket detail */}
-					{/* <CartDetailHeader /> */}
+					<CartDetailHeader />
 				</div>
 			</div>
 			<InputSearchSmall

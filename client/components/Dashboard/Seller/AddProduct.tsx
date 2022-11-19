@@ -1,4 +1,4 @@
-import { Group, Text, Modal } from '@mantine/core';
+import { Group, Text, Modal, NativeSelect } from '@mantine/core';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 import { useGlobalContext } from '../../../context/Context';
 import {
@@ -7,7 +7,7 @@ import {
 	CreateProductMutationVariables,
 	VendeursQuery,
 } from '../../../generated';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import Header from '../Header';
@@ -65,9 +65,18 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 	>(CreateProductDocument);
 
 	// Get the array of categories and replace the _ by space
-	const selectList = vendeur?.categories?.data.map((item) =>
-		item.attributes?.title?.replaceAll('_', ' ')
-	);
+
+	let selectList: any;
+
+	useEffect(() => {
+		if (vendeur) {
+			selectList = vendeur.categories?.data.map((item) =>
+				item.attributes?.title?.replaceAll('_', ' ')
+			);
+		}
+	}, [vendeur, value]);
+
+	console.log(selectList, vendeur);
 
 	const formDataImg = new FormData();
 
@@ -91,6 +100,7 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 				console.log(`Error creating produit ${error}`);
 			});
 	};
+
 	return (
 		<div>
 			<Modal
@@ -314,9 +324,69 @@ const AddProduct = ({ vendeur, open, setOpen }: iProps) => {
 								<p className="text-xs text-red-500">
 									{errors.reference?.message}
 								</p>
-
 								{/* Divider */}
 							</div>
+						</div>
+						<div className="flex flex-col mb-6">
+							<label
+								htmlFor="price"
+								className="mb-1 text-xs sm:text-sm tracking-wide text-gray-600"
+							>
+								Prix <span className="text-red-500">*</span>
+							</label>
+							<div className="relative">
+								<input
+									id="price"
+									type="number"
+									{...register('price', {
+										required:
+											'Vous devez renseigner ce champs',
+										valueAsNumber: true,
+									})}
+									className={`${
+										errors.price
+											? 'focus:border-red-500 focus:ring-red-500 border-red-500'
+											: 'focus:border-green-400 focus:ring-green-500'
+									} dark:bg-main-dark-bg dark:text-gray-200 text-sm sm:text-base placeholder-gray-500 pl-3 rounded-lg border border-gray-400 w-full py-2 focus:outline-none`}
+									placeholder="Prix du produit"
+								/>
+								<p className="text-xs text-red-500">
+									{errors.price?.message}
+								</p>
+							</div>
+						</div>
+						<div className="mb-6 ">
+							{selectList && (
+								<Controller
+									name="category"
+									control={control}
+									render={({ field }) => (
+										<NativeSelect
+											label="Category"
+											classNames={{
+												label: 'text-gray-600 font-normal',
+												input: 'text-gray-600 rounded-lg border border-gray-400 w-full focus:outline-none focus:border-green-400',
+											}}
+											data={selectList}
+											placeholder="Séléctionner"
+											value={value}
+											onChange={(e) => {
+												field.onChange(
+													e.currentTarget.value
+												);
+												setValue(e.currentTarget.value);
+											}}
+											radius="md"
+											required
+										/>
+									)}
+								/>
+							)}
+							{errors.category && (
+								<p className="text-xs text-red-500">
+									Vous devez renseigner ce champs
+								</p>
+							)}
 						</div>
 					</form>
 				</div>
