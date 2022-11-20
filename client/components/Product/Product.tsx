@@ -18,7 +18,7 @@ type Iprops = {
 const Product: FC<Iprops> = ({ id, attributes }) => {
 	const [scroll, scrollTo] = useWindowScroll();
 	const { product, setProduct } = useGlobalContext();
-	const [quantity, setQuantity] = useState<number>(1);
+	const [quantity] = useState<number>(1);
 	const router = useRouter();
 
 	const myLoader = ({ src, width, quality }: ImageLoaderProps) => {
@@ -26,12 +26,12 @@ const Product: FC<Iprops> = ({ id, attributes }) => {
 	};
 
 	const handleAddToBasket = (
-		title: string | undefined,
-		description: string | undefined,
-		price: number | undefined,
-		category: string | undefined,
-		image: string | undefined,
-		vendeur: Vendeur
+		title?: string,
+		description?: string,
+		price?: number,
+		category?: string,
+		image?: string,
+		vendeur?: Vendeur
 	) => {
 		setProduct([
 			...product,
@@ -82,13 +82,11 @@ const Product: FC<Iprops> = ({ id, attributes }) => {
 				{attributes?.title}
 			</h4>
 			{attributes?.stock! > 5 ? (
-				<div>
-					<p className="text-green-600 font-normal">En Stock</p>
-				</div>
+				<p className="text-green-600 font-normal">{`En Stock`}</p>
 			) : attributes?.stock! > 0 ? (
-				<div></div>
+				<p className="text-orange-500 font-normal">{`Moins de 5 en stock`}</p>
 			) : attributes?.stock! === 0 ? (
-				<p className="text-red-600 font-normal">Rupture de Stock</p>
+				<p className="text-red-600 font-normal">{`Rupture de Stock`}</p>
 			) : (
 				''
 			)}

@@ -32,7 +32,7 @@ const InputSearchMobile: FC<Iprops> = ({
 			searchProduct({
 				variables: {
 					limit: 5,
-					contains: 'hijab',
+					contains: inputSearch,
 				},
 			});
 		}

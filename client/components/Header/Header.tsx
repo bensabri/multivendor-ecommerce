@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { FC, useState } from 'react';
 import { useGlobalContext } from '../../context/Context';
 import Link from 'next/link';
-import InputSearchLarge from './InputSearchLarge';
+import InputSearchLarge from './InputSearchDesktop';
 import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import InputSearchMobile from './InputSearchMobile';
 import { NavBarData } from './NavBarData';
@@ -101,6 +101,7 @@ const Header: FC = () => {
 						))}
 					</ul>
 				</div>
+				{/* Input search for larger screen  */}
 				<InputSearchLarge
 					data={data}
 					searchProduct={searchProduct}
@@ -120,12 +121,12 @@ const Header: FC = () => {
 					) : (
 						<div>
 							<Link href="/" passHref>
-								<div className="cursor-pointer hover:underline">
+								<a className="cursor-pointer hover:underline">
 									<p className="font-bold md:text-sm">
 										Mon compte
 									</p>
 									<p>Identifiez-vous</p>
-								</div>
+								</a>
 							</Link>
 						</div>
 					)}
@@ -145,6 +146,7 @@ const Header: FC = () => {
 					</div>
 				</div>
 			</div>
+			{/* Input search for smaller screen  */}
 			<InputSearchMobile
 				data={data}
 				searchProduct={searchProduct}
@@ -159,9 +161,9 @@ const Header: FC = () => {
 					/>
 				</p>
 				<Link href={`/products/`} passHref>
-					<li className="text-white cursor-pointer hover:underline  hidden lg:inline-flex">
+					<a className="text-white cursor-pointer hover:underline  hidden lg:inline-flex">
 						Tous produits
-					</li>
+					</a>
 				</Link>
 				{NavBarData?.map((item, i) => (
 					<li

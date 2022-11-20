@@ -25,7 +25,7 @@ type ImageLoaderProps = {
 	root?: string;
 };
 
-const InputSearchLarge: FC<Iprops> = ({
+const InputSearchDesktop: FC<Iprops> = ({
 	inputSearch,
 	setInputSearch,
 	searchProduct,
@@ -100,4 +100,4 @@ const InputSearchLarge: FC<Iprops> = ({
 	);
 };
 
-export default InputSearchLarge;
+export default InputSearchDesktop;
