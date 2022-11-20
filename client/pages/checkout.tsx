@@ -103,8 +103,6 @@ const checkout: NextPage = () => {
 		handletotalDelivery();
 	}, [reRender]);
 
-	// console.log(totalPriceSeller);
-	console.log(productList);
 	return (
 		<div className="bg-gray-100">
 			<Head>

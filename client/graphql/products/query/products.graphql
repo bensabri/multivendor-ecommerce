@@ -4,12 +4,14 @@ query getProducts(
 	$pageSize: Int
 	$page: Int
 	$suspended: Boolean
+	$contains: String
 ) {
 	products(
 		pagination: { limit: $limit, pageSize: $pageSize, page: $page }
 		filters: {
 			slug: { eq: $slug }
 			vendeur: { suspended: { eq: $suspended } }
+			title: { contains: $contains }
 		}
 	) {
 		meta {

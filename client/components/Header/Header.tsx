@@ -4,10 +4,13 @@ import { useGlobalContext } from '../../context/Context';
 import Link from 'next/link';
 import InputSearchLarge from './InputSearchLarge';
 import { MenuIcon, ShoppingCartIcon } from '@heroicons/react/outline';
-import InputSearchSmall from './InputSearchSmall';
+import InputSearchMobile from './InputSearchMobile';
 import { NavBarData } from './NavBarData';
 import { gql, useLazyQuery, useQuery } from '@apollo/client';
 import {
+	GetClientsDocument,
+	GetClientsQuery,
+	GetClientsQueryVariables,
 	GetProductsDocument,
 	GetProductsQuery,
 	GetProductsQueryVariables,
@@ -32,6 +35,16 @@ const Header: FC = () => {
 	const handleClick = () => {
 		setActiveTab(!activeTab);
 	};
+
+	const { data: dataClient, loading } = useQuery<
+		GetClientsQuery,
+		GetClientsQueryVariables
+	>(GetClientsDocument, {
+		variables: {
+			email: 'vendeur1@ymail.com',
+			limit: 1,
+		},
+	});
 
 	const [searchProduct, { error, data }] = useLazyQuery<
 		GetProductsQuery,
@@ -102,6 +115,7 @@ const Header: FC = () => {
 								Compte et listes
 							</p>
 							<AccountDetailHeader />
+							<p className="hover:underline">{`Bonjour ${dataClient?.clients?.data[0].attributes?.lastname}`}</p>
 						</div>
 					) : (
 						<div>
@@ -115,21 +129,23 @@ const Header: FC = () => {
 							</Link>
 						</div>
 					)}
-				</div>
-				<div
-					onClick={() => router.push('/checkout')}
-					className="relative py-2 cursor-pointer hover:underline flex items-center group text-white"
-				>
-					<ShoppingCartIcon className="h-10" />
-					<div className="px-2">
-						<p className="font-bold md:text-sm">Panier</p>
-						<p className="text-xs">{productList?.length} article</p>
+					<div
+						onClick={() => router.push('/checkout')}
+						className="relative py-2 cursor-pointer hover:underline flex items-center group text-white"
+					>
+						<ShoppingCartIcon className="h-10" />
+						<div className="px-2">
+							<p className="font-bold md:text-sm">Panier</p>
+							<p className="text-xs">
+								{productList?.length} article
+							</p>
+						</div>
+						{/* Hover cart icon show the basket detail */}
+						<CartDetailHeader />
 					</div>
-					{/* Hover cart icon show the basket detail */}
-					<CartDetailHeader />
 				</div>
 			</div>
-			<InputSearchSmall
+			<InputSearchMobile
 				data={data}
 				searchProduct={searchProduct}
 				inputSearch={inputSearch}

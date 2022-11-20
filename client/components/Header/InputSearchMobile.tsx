@@ -18,7 +18,7 @@ type Iprops = {
 	>;
 };
 
-const InputSearchSmall: FC<Iprops> = ({
+const InputSearchMobile: FC<Iprops> = ({
 	inputSearch,
 	setInputSearch,
 	searchProduct,
@@ -32,7 +32,7 @@ const InputSearchSmall: FC<Iprops> = ({
 			searchProduct({
 				variables: {
 					limit: 5,
-					contains: inputSearch,
+					contains: 'hijab',
 				},
 			});
 		}
@@ -94,4 +94,4 @@ const InputSearchSmall: FC<Iprops> = ({
 	);
 };
 
-export default InputSearchSmall;
+export default InputSearchMobile;

@@ -1757,6 +1757,14 @@ export type GetCategoriesQueryVariables = Exact<{
 
 export type GetCategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryEntityResponseCollection', meta: { __typename?: 'ResponseCollectionMeta', pagination: { __typename?: 'Pagination', total: number } }, data: Array<{ __typename?: 'CategoryEntity', id?: string | null, attributes?: { __typename?: 'Category', title?: string | null, slug?: string | null, products?: { __typename?: 'ProductRelationResponseCollection', data: Array<{ __typename?: 'ProductEntity', id?: string | null, attributes?: { __typename?: 'Product', category: Enum_Product_Category, description: string, price: number, stock: number, slug?: string | null, seller_name: string, delivery_time?: number | null, title: string, reference: any, image: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, url: string, width?: number | null, height?: number | null, formats?: any | null } | null }> }, vendeur?: { __typename?: 'VendeurEntityResponse', data?: { __typename?: 'VendeurEntity', id?: string | null, attributes?: { __typename?: 'Vendeur', name?: string | null, email?: string | null, delivery_price?: number | null, suspended?: boolean | null } | null } | null } | null } | null }> } | null } | null }> } | null };
 
+export type GetClientsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  email?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetClientsQuery = { __typename?: 'Query', clients?: { __typename?: 'ClientEntityResponseCollection', data: Array<{ __typename?: 'ClientEntity', id?: string | null, attributes?: { __typename?: 'Client', lastname?: string | null, firstname?: string | null, email?: string | null, phone_number?: any | null, billing_address?: { __typename?: 'ComponentClientAddress', address?: string | null, zip_code?: any | null, city?: string | null, country?: string | null } | null } | null }> } | null };
+
 export type GetOrdersQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   client_email?: InputMaybe<Scalars['String']>;
@@ -1789,6 +1797,7 @@ export type GetProductsQueryVariables = Exact<{
   pageSize?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
   suspended?: InputMaybe<Scalars['Boolean']>;
+  contains?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -1939,6 +1948,56 @@ export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
 export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
 export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;
+export const GetClientsDocument = gql`
+    query getClients($limit: Int, $email: String) {
+  clients(pagination: {limit: $limit}, filters: {email: {eq: $email}}) {
+    data {
+      id
+      attributes {
+        lastname
+        firstname
+        email
+        phone_number
+        billing_address {
+          address
+          zip_code
+          city
+          country
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetClientsQuery__
+ *
+ * To run a query within a React component, call `useGetClientsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetClientsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetClientsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useGetClientsQuery(baseOptions?: Apollo.QueryHookOptions<GetClientsQuery, GetClientsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetClientsQuery, GetClientsQueryVariables>(GetClientsDocument, options);
+      }
+export function useGetClientsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetClientsQuery, GetClientsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetClientsQuery, GetClientsQueryVariables>(GetClientsDocument, options);
+        }
+export type GetClientsQueryHookResult = ReturnType<typeof useGetClientsQuery>;
+export type GetClientsLazyQueryHookResult = ReturnType<typeof useGetClientsLazyQuery>;
+export type GetClientsQueryResult = Apollo.QueryResult<GetClientsQuery, GetClientsQueryVariables>;
 export const GetOrdersDocument = gql`
     query getOrders($limit: Int, $client_email: String, $is_payed: Boolean, $sort: [String]) {
   commandes(
@@ -2077,10 +2136,10 @@ export type CreateProductMutationHookResult = ReturnType<typeof useCreateProduct
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
 export const GetProductsDocument = gql`
-    query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean) {
+    query getProducts($slug: String, $limit: Int, $pageSize: Int, $page: Int, $suspended: Boolean, $contains: String) {
   products(
     pagination: {limit: $limit, pageSize: $pageSize, page: $page}
-    filters: {slug: {eq: $slug}, vendeur: {suspended: {eq: $suspended}}}
+    filters: {slug: {eq: $slug}, vendeur: {suspended: {eq: $suspended}}, title: {contains: $contains}}
   ) {
     meta {
       pagination {
@@ -2145,6 +2204,7 @@ export const GetProductsDocument = gql`
  *      pageSize: // value for 'pageSize'
  *      page: // value for 'page'
  *      suspended: // value for 'suspended'
+ *      contains: // value for 'contains'
  *   },
  * });
  */

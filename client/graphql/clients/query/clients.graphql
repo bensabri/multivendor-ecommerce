@@ -1,0 +1,19 @@
+query getClients($limit: Int, $email: String) {
+	clients(pagination: { limit: $limit }, filters: { email: { eq: $email } }) {
+		data {
+			id
+			attributes {
+				lastname
+				firstname
+				email
+				phone_number
+				billing_address {
+					address
+					zip_code
+					city
+					country
+				}
+			}
+		}
+	}
+}
