@@ -45,63 +45,133 @@ const checkout: NextPage = () => {
 		})
 		.map((item) => ({
 			seller_email: item.vendeur.email,
+			delivery_price: item.vendeur.delivery_price,
 		}));
+
+	const statusOrder = status.map((item) => ({
+		// mutate to database createOrder
+		seller_email: item.seller_email,
+	}));
+
+	const stockProducts = productList.map(({ id, quantity, stock }) => {
+		return {
+			id: id,
+			stock: stock,
+			quantity: quantity,
+		};
+	});
+
+	// Get unique seller
+	const uniqueSeller = [
+		...new Map(
+			productList.map((item) => [item['seller_name'], item.vendeur])
+		).values(),
+	];
 
 	// Render the list after delete an item
 	const handleCount = () => {
 		setReRender(!reRender);
 	};
 
-	const handletotalDelivery = () => {
-		const getTotalSells = (name: string): number => {
-			// Get the total price amount per vendeur
-			let filterName = productList
-				.filter((item) => item.seller_name === name)
-				.reduce((a, b) => a + b.total, 0);
-			return filterName;
-		};
-
-		const uniqueSeller = [
-			...new Map(
-				productList.map((item) => [item['seller_name'], item.vendeur])
-			).values(),
-		];
-
-		const totalPriceSeller = uniqueSeller.map((item) => {
-			// Create an object of each vendeur by name, total delivery, price, get the total sells per vendeur
-			return {
-				name: item.name,
-				total: getTotalSells(item.name),
-				delivery_price: item.delivery_price,
-			};
-		});
-
-		const deliveryPrice = totalPriceSeller.map((item) => {
-			// from that object split the free delivery price and the payed
-			// get if the delivery if free or not
-			if (item.total < 50) {
-				return { delivery_price: item.delivery_price };
-			}
-			return { delivery_price: 0 };
-		});
-
-		const totalDeliveryPrice = deliveryPrice.reduce(
-			(a, b) => a + b.delivery_price,
-			0
+	// Get the seller products in one array
+	const getSellerProducts = (email: string) => {
+		let filterEmail = product.filter(
+			(item) => item.vendeur.seller_email === email
 		);
 
-		return {
-			totalDeliveryPrice: totalDeliveryPrice,
-			totalPriceSeller: totalPriceSeller,
-			deliveryPrice: deliveryPrice,
-		};
+		return filterEmail;
 	};
 
-	const { totalDeliveryPrice, totalPriceSeller } = handletotalDelivery();
+	const productSeller = status.map((item) => {
+		return {
+			vendeur: item.seller_email,
+			delivery_price: item.delivery_price,
+			product: getSellerProducts(item.seller_email),
+		};
+	});
 
-	useEffect(() => {
-		handletotalDelivery();
-	}, [reRender]);
+	const getTotalSells = (name: string) => {
+		// Get the total price amount per vendeur
+		let filterName = productList
+			.filter((item) => item.seller_name === name)
+			.reduce((a, b) => a + b.total, 0);
+		return filterName;
+	};
+
+	const totalPriceSeller = uniqueSeller.map((item) => {
+		// Create an object of each vendeur by name, total delivery, price
+		// get the total sells per vendeur
+		return {
+			name: item.name,
+			total: getTotalSells(item.name),
+			delivery_price: item.delivery_price,
+		};
+	});
+
+	const deliveryPrice = totalPriceSeller.map((item) => {
+		// from that object split the free delivery price and the payed
+		// get if the delivery if free or not
+		if (item.total < 50) {
+			return { delivery_price: item.delivery_price };
+		}
+		return { delivery_price: 0 };
+	});
+
+	const totalDeliveryPrice = deliveryPrice.reduce(
+		(a, b) => a + b.delivery_price,
+		0
+	);
+
+	// const handletotalDelivery = () => {
+	// 	const getTotalSells = (name: string): number => {
+	// 		// Get the total price amount per vendeur
+	// 		let filterName = productList
+	// 			.filter((item) => item.seller_name === name)
+	// 			.reduce((a, b) => a + b.total, 0);
+	// 		return filterName;
+	// 	};
+
+	// 	const uniqueSeller = [
+	// 		...new Map(
+	// 			productList.map((item) => [item['seller_name'], item.vendeur])
+	// 		).values(),
+	// 	];
+
+	// 	const totalPriceSeller = uniqueSeller.map((item) => {
+	// 		// Create an object of each vendeur by name, total delivery, price, get the total sells per vendeur
+	// 		return {
+	// 			name: item.name,
+	// 			total: getTotalSells(item.name),
+	// 			delivery_price: item.delivery_price,
+	// 		};
+	// 	});
+
+	// 	const deliveryPrice = totalPriceSeller.map((item) => {
+	// 		// from that object split the free delivery price and the payed
+	// 		// get if the delivery if free or not
+	// 		if (item.total < 50) {
+	// 			return { delivery_price: item.delivery_price };
+	// 		}
+	// 		return { delivery_price: 0 };
+	// 	});
+
+	// 	const totalDeliveryPrice = deliveryPrice.reduce(
+	// 		(a, b) => a + b.delivery_price,
+	// 		0
+	// 	);
+
+	// 	return {
+	// 		totalDeliveryPrice: totalDeliveryPrice,
+	// 		totalPriceSeller: totalPriceSeller,
+	// 		deliveryPrice: deliveryPrice,
+	// 	};
+	// };
+
+	// const { totalDeliveryPrice, totalPriceSeller } = handletotalDelivery();
+
+	// useEffect(() => {
+	// 	handletotalDelivery();
+	// }, [reRender]);
 
 	return (
 		<div className="bg-gray-100">
