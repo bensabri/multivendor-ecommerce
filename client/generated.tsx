@@ -1765,6 +1765,19 @@ export type GetClientsQueryVariables = Exact<{
 
 export type GetClientsQuery = { __typename?: 'Query', clients?: { __typename?: 'ClientEntityResponseCollection', data: Array<{ __typename?: 'ClientEntity', id?: string | null, attributes?: { __typename?: 'Client', lastname?: string | null, firstname?: string | null, email?: string | null, phone_number?: any | null, billing_address?: { __typename?: 'ComponentClientAddress', address?: string | null, zip_code?: any | null, city?: string | null, country?: string | null } | null } | null }> } | null };
 
+export type CreateCommandeVendeurMutationVariables = Exact<{
+  order_id?: InputMaybe<Scalars['Int']>;
+  is_payed?: InputMaybe<Scalars['Boolean']>;
+  total?: InputMaybe<Scalars['Float']>;
+  seller_email?: InputMaybe<Scalars['String']>;
+  delivery_price?: InputMaybe<Scalars['Float']>;
+  product?: InputMaybe<Array<InputMaybe<ComponentProductProductsInput>> | InputMaybe<ComponentProductProductsInput>>;
+  client?: InputMaybe<ComponentClientClientsInput>;
+}>;
+
+
+export type CreateCommandeVendeurMutation = { __typename?: 'Mutation', createCommandeVendeur?: { __typename?: 'CommandeVendeurEntityResponse', data?: { __typename?: 'CommandeVendeurEntity', id?: string | null, attributes?: { __typename?: 'CommandeVendeur', createdAt?: any | null, is_payed: boolean, order_id?: number | null, total?: number | null, seller_email?: string | null, product?: Array<{ __typename?: 'ComponentProductProducts', category?: string | null, title?: string | null, price?: number | null, quantity?: number | null, reference?: any | null } | null> | null } | null } | null } | null };
+
 export type GetOrdersQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   client_email?: InputMaybe<Scalars['String']>;
@@ -1998,6 +2011,63 @@ export function useGetClientsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetClientsQueryHookResult = ReturnType<typeof useGetClientsQuery>;
 export type GetClientsLazyQueryHookResult = ReturnType<typeof useGetClientsLazyQuery>;
 export type GetClientsQueryResult = Apollo.QueryResult<GetClientsQuery, GetClientsQueryVariables>;
+export const CreateCommandeVendeurDocument = gql`
+    mutation createCommandeVendeur($order_id: Int, $is_payed: Boolean, $total: Float, $seller_email: String, $delivery_price: Float, $product: [ComponentProductProductsInput], $client: ComponentClientClientsInput) {
+  createCommandeVendeur(
+    data: {order_id: $order_id, is_payed: $is_payed, total: $total, seller_email: $seller_email, delivery_price: $delivery_price, product: $product, client: $client}
+  ) {
+    data {
+      id
+      attributes {
+        createdAt
+        is_payed
+        order_id
+        total
+        seller_email
+        product {
+          category
+          title
+          price
+          quantity
+          reference
+        }
+      }
+    }
+  }
+}
+    `;
+export type CreateCommandeVendeurMutationFn = Apollo.MutationFunction<CreateCommandeVendeurMutation, CreateCommandeVendeurMutationVariables>;
+
+/**
+ * __useCreateCommandeVendeurMutation__
+ *
+ * To run a mutation, you first call `useCreateCommandeVendeurMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommandeVendeurMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommandeVendeurMutation, { data, loading, error }] = useCreateCommandeVendeurMutation({
+ *   variables: {
+ *      order_id: // value for 'order_id'
+ *      is_payed: // value for 'is_payed'
+ *      total: // value for 'total'
+ *      seller_email: // value for 'seller_email'
+ *      delivery_price: // value for 'delivery_price'
+ *      product: // value for 'product'
+ *      client: // value for 'client'
+ *   },
+ * });
+ */
+export function useCreateCommandeVendeurMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommandeVendeurMutation, CreateCommandeVendeurMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommandeVendeurMutation, CreateCommandeVendeurMutationVariables>(CreateCommandeVendeurDocument, options);
+      }
+export type CreateCommandeVendeurMutationHookResult = ReturnType<typeof useCreateCommandeVendeurMutation>;
+export type CreateCommandeVendeurMutationResult = Apollo.MutationResult<CreateCommandeVendeurMutation>;
+export type CreateCommandeVendeurMutationOptions = Apollo.BaseMutationOptions<CreateCommandeVendeurMutation, CreateCommandeVendeurMutationVariables>;
 export const GetOrdersDocument = gql`
     query getOrders($limit: Int, $client_email: String, $is_payed: Boolean, $sort: [String]) {
   commandes(

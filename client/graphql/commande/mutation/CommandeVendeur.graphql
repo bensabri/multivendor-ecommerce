@@ -1,0 +1,39 @@
+mutation createCommandeVendeur(
+	$order_id: Int
+	$is_payed: Boolean
+	$total: Float
+	$seller_email: String
+	$delivery_price: Float
+	$product: [ComponentProductProductsInput]
+	$client: ComponentClientClientsInput
+) {
+	createCommandeVendeur(
+		data: {
+			order_id: $order_id
+			is_payed: $is_payed
+			total: $total
+			seller_email: $seller_email
+			delivery_price: $delivery_price
+			product: $product
+			client: $client
+		}
+	) {
+		data {
+			id
+			attributes {
+				createdAt
+				is_payed
+				order_id
+				total
+				seller_email
+				product {
+					category
+					title
+					price
+					quantity
+					reference
+				}
+			}
+		}
+	}
+}

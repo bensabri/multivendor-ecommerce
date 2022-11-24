@@ -6,6 +6,12 @@ import CheckoutProduct from '../components/Checkout/CheckoutProduct';
 import Header from '../components/Header/Header';
 import { useGlobalContext } from '../context/Context';
 import Currency from 'react-currency-formatter';
+import { useMutation } from '@apollo/client';
+import {
+	CreateCommandeVendeurMutation,
+	CreateCommandeVendeurMutationVariables,
+	GetOrdersDocument,
+} from '../generated';
 
 const checkout: NextPage = () => {
 	const { productList } = useGlobalContext();
@@ -121,6 +127,11 @@ const checkout: NextPage = () => {
 		(a, b) => a + b.delivery_price,
 		0
 	);
+
+	const [createOrderSeller, { data: orderDataSeller }] =
+		useMutation(GetOrdersDocument);
+
+	// Create order by posting it to database
 
 	// const handletotalDelivery = () => {
 	// 	const getTotalSells = (name: string): number => {
