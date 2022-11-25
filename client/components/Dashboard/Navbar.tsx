@@ -53,7 +53,7 @@ const Navbar = () => {
 	const { data: vendeur } = useQuery<VendeursQuery, VendeursQueryVariables>(
 		VendeursDocument,
 		{
-			variables: { email: 'vendeur1@ymail.com' },
+			variables: { email: user },
 		}
 	);
 

@@ -28,9 +28,10 @@ const Header: FC = () => {
 		product,
 		activeCategory,
 		setActiveCategory,
+		user,
 	} = useGlobalContext();
 	const [inputSearch, setInputSearch] = useState<string>('');
-	const [user, setUser] = useState<boolean>(true);
+	// const [user, setUser] = useState<boolean>(true);
 
 	const handleClick = () => {
 		setActiveTab(!activeTab);
@@ -41,7 +42,7 @@ const Header: FC = () => {
 		GetClientsQueryVariables
 	>(GetClientsDocument, {
 		variables: {
-			email: 'vendeur1@ymail.com',
+			email: user,
 			limit: 1,
 		},
 	});

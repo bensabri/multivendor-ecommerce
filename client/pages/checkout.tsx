@@ -6,17 +6,34 @@ import CheckoutProduct from '../components/Checkout/CheckoutProduct';
 import Header from '../components/Header/Header';
 import { useGlobalContext } from '../context/Context';
 import Currency from 'react-currency-formatter';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
+	CreateCommandeDocument,
+	CreateCommandeMutation,
+	CreateCommandeMutationVariables,
 	CreateCommandeVendeurMutation,
 	CreateCommandeVendeurMutationVariables,
+	GetClientsDocument,
+	GetClientsQuery,
+	GetClientsQueryVariables,
 	GetOrdersDocument,
 } from '../generated';
+import { useId } from 'react';
 
 const checkout: NextPage = () => {
-	const { productList } = useGlobalContext();
+	const { productList, user } = useGlobalContext();
 	const [reRender, setReRender] = useState<boolean>(false);
 	const router = useRouter();
+
+	const { data: dataClient, loading } = useQuery<
+		GetClientsQuery,
+		GetClientsQueryVariables
+	>(GetClientsDocument, {
+		variables: {
+			email: user,
+			limit: 1,
+		},
+	});
 
 	const total = productList?.reduce((a, b) => a + b.price * b.quantity, 0);
 
@@ -128,10 +145,44 @@ const checkout: NextPage = () => {
 		0
 	);
 
-	const [createOrderSeller, { data: orderDataSeller }] =
-		useMutation(GetOrdersDocument);
+	// const [createOrderSeller, { data: orderDataSeller }] = useMutation<
+	// 	CreateCommandeVendeurMutation,
+	// 	CreateCommandeVendeurMutationVariables
+	// >(GetOrdersDocument);
 
 	// Create order by posting it to database
+
+	const [createOrder, { data: orderDataCreated }] = useMutation<
+		CreateCommandeMutation,
+		CreateCommandeMutationVariables
+	>(CreateCommandeDocument, {
+		variables: {
+			order_id: Number(useId()),
+			product: product,
+			status: status,
+			client_email: user,
+			client: {
+				firstname: dataClient?.clients?.data[0].attributes?.firstname,
+				lastname: dataClient?.clients?.data[0].attributes?.lastname,
+				email: dataClient?.clients?.data[0].attributes?.email,
+				phone_number:
+					dataClient?.clients?.data[0]?.attributes?.phone_number,
+				billing_address: {
+					address:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.address,
+					zip_code:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.zip_code,
+					city: dataClient?.clients?.data[0].attributes
+						?.billing_address?.city,
+					country:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.country,
+				},
+			},
+		},
+	});
 
 	// const handletotalDelivery = () => {
 	// 	const getTotalSells = (name: string): number => {

@@ -50,6 +50,7 @@ const Products: React.FC = () => {
 		themeSettings,
 		currentMode,
 		currentColor,
+		user,
 	} = useGlobalContext();
 
 	const [productPerPage, setProductPerPage] = useState<number>(10);
@@ -66,7 +67,7 @@ const Products: React.FC = () => {
 		VendeursQueryVariables
 	>(VendeursDocument, {
 		variables: {
-			email: 'vendeur1@ymail.com',
+			email: user,
 		},
 	});
 
@@ -76,7 +77,7 @@ const Products: React.FC = () => {
 	>(ProductsSearchDocument, {
 		variables: {
 			sort: [filter],
-			email: 'vendeur1@ymail.com',
+			email: user,
 			pageSize: productPerPage,
 			page: activePageProductSeller,
 		},
@@ -191,7 +192,7 @@ const Products: React.FC = () => {
 												if (search?.length >= 2) {
 													getProducts({
 														variables: {
-															email: 'vendeur1@ymail.com',
+															email: user,
 															contains:
 																e.target.value,
 														},

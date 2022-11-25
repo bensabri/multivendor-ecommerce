@@ -37,6 +37,7 @@ const AppProvider = ({ children }: Props) => {
 		// categories fetch at first load using lazyquery
 		'Articles Religieux, Parfun'
 	);
+	const [user, setUser] = useState<string>('vendeur1@ymail.com');
 	const [activePageCategory, setPageCategory] = useState<number>(1); // active page pagination category page
 	const [activePageProductSeller, setPageProductSeller] = useState(1); // active page pagination products seller page
 
@@ -99,6 +100,8 @@ const AppProvider = ({ children }: Props) => {
 		handleSetMode,
 		activePageProductSeller,
 		setPageProductSeller,
+		user,
+		setUser,
 	};
 
 	useEffect(() => {

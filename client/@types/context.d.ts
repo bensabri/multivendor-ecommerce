@@ -32,4 +32,6 @@ export type Icontext = {
 	handleSetMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	activePageProductSeller: number;
 	setPageProductSeller: Dispatch<SetStateAction<number>>;
+	user: string;
+	setUser: Dispatch<SetStateAction<string>>;
 };

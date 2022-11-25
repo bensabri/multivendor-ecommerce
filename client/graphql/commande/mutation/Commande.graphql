@@ -1,0 +1,50 @@
+mutation createCommande(
+	$order_id: Int
+	$total: Float
+	$is_payed: Boolean
+	$total_delivery_price: Float
+	$client_email: String
+	$product: [ComponentProductProductsInput]
+	$client: ComponentClientClientsInput
+	$status: [ComponentVendeurStatusInput]
+) {
+	createCommande(
+		data: {
+			order_id: $order_id
+			total: $total
+			is_payed: $is_payed
+			total_delivery_price: $total_delivery_price
+			product: $product
+			client_email: $client_email
+			client: $client
+			status: $status
+		}
+	) {
+		data {
+			id
+			attributes {
+				createdAt
+				order_id
+				total
+				is_payed
+				total_delivery_price
+				status {
+					seller_email
+					status
+				}
+				product {
+					category
+					title
+					price
+					quantity
+					reference
+					vendeur {
+						seller_name
+						seller_email
+						delivery_price
+					}
+				}
+			}
+		}
+	}
+}

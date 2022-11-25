@@ -8,14 +8,16 @@ import {
 } from '../../../generated';
 import Header from '../../Header/Header';
 import Currency from 'react-currency-formatter';
+import { useGlobalContext } from '../../../context/Context';
 
 const AccountCustomer = () => {
+	const { user } = useGlobalContext();
 	const { data, loading } = useQuery<GetOrdersQuery, GetOrdersQueryVariables>(
 		GetOrdersDocument,
 		{
 			variables: {
 				limit: 1000,
-				client_email: 'ssabril@ymail.com',
+				client_email: user,
 				is_payed: true,
 				sort: 'createdAt:DESC',
 			},
