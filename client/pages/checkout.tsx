@@ -11,6 +11,7 @@ import {
 	CreateCommandeDocument,
 	CreateCommandeMutation,
 	CreateCommandeMutationVariables,
+	CreateCommandeVendeurDocument,
 	CreateCommandeVendeurMutation,
 	CreateCommandeVendeurMutationVariables,
 	GetClientsDocument,
@@ -145,10 +146,10 @@ const checkout: NextPage = () => {
 		0
 	);
 
-	// const [createOrderSeller, { data: orderDataSeller }] = useMutation<
-	// 	CreateCommandeVendeurMutation,
-	// 	CreateCommandeVendeurMutationVariables
-	// >(GetOrdersDocument);
+	const [createOrderSeller, { data: orderDataSeller }] = useMutation<
+		CreateCommandeVendeurMutation,
+		CreateCommandeVendeurMutationVariables
+	>(CreateCommandeVendeurDocument);
 
 	// Create order by posting it to database
 
@@ -157,7 +158,7 @@ const checkout: NextPage = () => {
 		CreateCommandeMutationVariables
 	>(CreateCommandeDocument, {
 		variables: {
-			order_id: Number(useId()),
+			order_id: 646161,
 			product: product,
 			status: status,
 			client_email: user,
@@ -184,56 +185,56 @@ const checkout: NextPage = () => {
 		},
 	});
 
-	// const handletotalDelivery = () => {
-	// 	const getTotalSells = (name: string): number => {
-	// 		// Get the total price amount per vendeur
-	// 		let filterName = productList
-	// 			.filter((item) => item.seller_name === name)
-	// 			.reduce((a, b) => a + b.total, 0);
-	// 		return filterName;
-	// 	};
+	const orderSeller = productSeller.map((item) => {
+		return {
+			delivery_price:
+				item.product.reduce((a, b) => a + b.total, 0) >= 50
+					? 0
+					: item.delivery_price,
+			order_id: 646161,
+			total: Number(
+				item.product.reduce((a, b) => a + b.total, 0).toFixed(2)
+			),
+			seller_email: item.vendeur,
+			product: item.product,
+			client: {
+				firstname: dataClient?.clients?.data[0].attributes?.firstname,
+				lastname: dataClient?.clients?.data[0].attributes?.lastname,
+				email: dataClient?.clients?.data[0].attributes?.email,
+				phone_number:
+					dataClient?.clients?.data[0].attributes?.phone_number,
+				billing_address: {
+					address:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.address,
+					zip_code:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.zip_code,
+					city: dataClient?.clients?.data[0].attributes
+						?.billing_address?.city,
+					country:
+						dataClient?.clients?.data[0].attributes?.billing_address
+							?.country,
+				},
+			},
+		};
+	});
 
-	// 	const uniqueSeller = [
-	// 		...new Map(
-	// 			productList.map((item) => [item['seller_name'], item.vendeur])
-	// 		).values(),
-	// 	];
+	const createCheckoutSession = async () => {
+		localStorage.setItem('productList', JSON.stringify(productList));
 
-	// 	const totalPriceSeller = uniqueSeller.map((item) => {
-	// 		// Create an object of each vendeur by name, total delivery, price, get the total sells per vendeur
-	// 		return {
-	// 			name: item.name,
-	// 			total: getTotalSells(item.name),
-	// 			delivery_price: item.delivery_price,
-	// 		};
-	// 	});
+		await Promise.all(
+			orderSeller.map((item) => {
+				createOrderSeller({
+					variables: item,
+				});
+			})
+		);
+	};
 
-	// 	const deliveryPrice = totalPriceSeller.map((item) => {
-	// 		// from that object split the free delivery price and the payed
-	// 		// get if the delivery if free or not
-	// 		if (item.total < 50) {
-	// 			return { delivery_price: item.delivery_price };
-	// 		}
-	// 		return { delivery_price: 0 };
-	// 	});
-
-	// 	const totalDeliveryPrice = deliveryPrice.reduce(
-	// 		(a, b) => a + b.delivery_price,
-	// 		0
-	// 	);
-
-	// 	return {
-	// 		totalDeliveryPrice: totalDeliveryPrice,
-	// 		totalPriceSeller: totalPriceSeller,
-	// 		deliveryPrice: deliveryPrice,
-	// 	};
-	// };
-
-	// const { totalDeliveryPrice, totalPriceSeller } = handletotalDelivery();
-
-	// useEffect(() => {
-	// 	handletotalDelivery();
-	// }, [reRender]);
+	const handleCreateOrder = () => {
+		createOrder();
+	};
 
 	return (
 		<div className="bg-gray-100">
@@ -308,6 +309,26 @@ const checkout: NextPage = () => {
 						</p>
 					</div>
 				</div>
+				{/* Right */}
+				{productList.length > 0 && (
+					<div className="flex flex-col bg-white p-10 shadow-md my-5 mx-2 md:mx-5 lg:ml-0 lg:w-80 rounded-md">
+						{!user && (
+							<p className="pb-5">
+								Vous devez vous connecté pour passé commande
+							</p>
+						)}
+						<div className="space-y-10">
+							<button
+								role="link"
+								type="button"
+								onClick={handleCreateOrder}
+								className="w-full p-2 m-5 font-semibold lg:m-0 text-xs md:text-sm bg-basketBtn hover:bg-green-600 text-white rounded outline-none"
+							>
+								CARTE BANCAIRE
+							</button>
+						</div>
+					</div>
+				)}
 			</main>
 		</div>
 	);
