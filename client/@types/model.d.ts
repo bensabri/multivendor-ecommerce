@@ -1,6 +1,19 @@
 import { Enum_Product_Category } from '../generated';
 
 // ProductList types //
+export type imageProduct = {
+	data: {
+		id?: string | null;
+		attributes?: {
+			__typename?: 'UploadFile';
+			name: string;
+			url: string;
+			width?: number | null;
+			height?: number | null;
+			formats?: any | null;
+		} | null;
+	}[];
+};
 
 export type IproductListVendeur = {
 	name: string;
@@ -18,7 +31,7 @@ export type IProductList = {
 	total: number;
 	quantity: number;
 	stock: number;
-	image: string;
+	image: imageProduct;
 	vendeur: IproductListVendeur;
 	seller_name: string;
 	delivery_time: number;

@@ -1,6 +1,6 @@
 import Image, { ImageLoaderProps } from 'next/image';
 import { useRouter } from 'next/router';
-import { IProductsAttributes } from '../../@types/model';
+import { imageProduct, IProductsAttributes } from '../../@types/model';
 import Currency from 'react-currency-formatter';
 import { Vendeur } from '../../generated';
 import { useGlobalContext } from '../../context/Context';
@@ -26,12 +26,12 @@ const Product: FC<Iprops> = ({ id, attributes }) => {
 	};
 
 	const handleAddToBasket = (
-		title?: string,
-		description?: string,
-		price?: number,
-		category?: string,
-		image?: string,
-		vendeur?: Vendeur
+		title: string | undefined,
+		description: string | undefined,
+		price: number | undefined,
+		category: string | undefined,
+		image: imageProduct,
+		vendeur: Vendeur
 	) => {
 		setProduct([
 			...product,
@@ -109,7 +109,7 @@ const Product: FC<Iprops> = ({ id, attributes }) => {
 							attributes?.description,
 							attributes?.price,
 							attributes?.category,
-							attributes?.image.data[0].attributes?.url,
+							attributes?.image!,
 							attributes?.vendeur?.data?.attributes!
 						);
 					}}

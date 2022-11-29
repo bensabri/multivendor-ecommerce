@@ -2,7 +2,7 @@ import { NativeSelect } from '@mantine/core';
 import Image, { ImageLoaderProps } from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import Currency from 'react-currency-formatter';
-import { IproductListVendeur } from '../../@types/model';
+import { imageProduct, IproductListVendeur } from '../../@types/model';
 import { useGlobalContext } from '../../context/Context';
 
 type Iprops = {
@@ -15,7 +15,7 @@ type Iprops = {
 	quantity: number;
 	stock: number;
 	vendeur: IproductListVendeur;
-	image: string;
+	image: imageProduct;
 	reference: number;
 	handleCount: () => void;
 };
@@ -74,7 +74,7 @@ const CheckoutProduct: FC<Iprops> = ({
 				height={100}
 				width={100}
 				objectFit="contain"
-				src={image}
+				src={image.data[0].attributes?.url!}
 			/>
 			<div className="col-span-3 mx-5 ">
 				<p className="font-semibold line-clamp-1">{title}</p>

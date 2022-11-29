@@ -46,7 +46,7 @@ const checkout: NextPage = () => {
 		quantity: item.quantity,
 		total: item.total,
 		reference: item.reference,
-		image: item.image,
+		image: item.image.data[0].id,
 		vendeur: {
 			seller_name: item.vendeur.name,
 			seller_email: item.vendeur.email,
@@ -160,7 +160,7 @@ const checkout: NextPage = () => {
 		variables: {
 			order_id: 646161,
 			product: product,
-			status: status,
+			status: statusOrder,
 			client_email: user,
 			client: {
 				firstname: dataClient?.clients?.data[0].attributes?.firstname,
@@ -321,7 +321,7 @@ const checkout: NextPage = () => {
 							<button
 								role="link"
 								type="button"
-								onClick={handleCreateOrder}
+								onClick={createCheckoutSession}
 								className="w-full p-2 m-5 font-semibold lg:m-0 text-xs md:text-sm bg-basketBtn hover:bg-green-600 text-white rounded outline-none"
 							>
 								CARTE BANCAIRE

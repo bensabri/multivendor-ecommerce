@@ -31,7 +31,7 @@ const CartDetailHeader = () => {
 						height={50}
 						width={50}
 						objectFit="contain"
-						src={item.image}
+						src={item.image.data[0].attributes?.url!}
 					/>
 					<div className="col-span-2 mx-2 ">
 						<p

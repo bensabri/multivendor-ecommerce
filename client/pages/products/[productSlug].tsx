@@ -16,6 +16,7 @@ import {
 	Vendeur,
 } from '../../generated';
 import Footer from '../../components/Footer/Footer';
+import { imageProduct } from '../../@types/model';
 
 type Idata = {
 	data: GetProductsQuery;
@@ -58,7 +59,7 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 		description: string | undefined,
 		price: number | undefined,
 		category: string | undefined,
-		image: string | undefined,
+		image: imageProduct,
 		vendeur: Vendeur,
 		seller_name: string | undefined
 	) => {
@@ -234,8 +235,7 @@ const ProductDetail: NextPage<Idata> = ({ data }) => {
 											productArray[0].description,
 											productArray[0].price,
 											productArray[0].category,
-											productArray[0].image?.data[0]
-												.attributes?.url,
+											productArray[0].image!,
 											productArray[0].vendeur?.data
 												?.attributes!,
 											productArray[0].seller_name
@@ -280,7 +280,7 @@ export const getStaticPaths = async () => {
 
 	const paths = data.products?.data.map((item) => {
 		return {
-			params: { productSlug: item.attributes?.slug.toString() },
+			params: { productSlug: item.attributes?.slug },
 		};
 	});
 
