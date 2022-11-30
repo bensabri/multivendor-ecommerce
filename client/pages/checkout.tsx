@@ -236,6 +236,12 @@ const checkout: NextPage = () => {
 		createOrder();
 	};
 
+	useEffect(() => {
+		if (orderDataCreated?.createCommande?.data?.id) {
+			createCheckoutSession();
+		}
+	}, [orderDataCreated]);
+
 	return (
 		<div className="bg-gray-100">
 			<Head>
@@ -321,7 +327,7 @@ const checkout: NextPage = () => {
 							<button
 								role="link"
 								type="button"
-								onClick={createCheckoutSession}
+								onClick={handleCreateOrder}
 								className="w-full p-2 m-5 font-semibold lg:m-0 text-xs md:text-sm bg-basketBtn hover:bg-green-600 text-white rounded outline-none"
 							>
 								CARTE BANCAIRE
