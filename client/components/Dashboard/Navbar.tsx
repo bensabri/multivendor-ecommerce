@@ -42,6 +42,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }: iProps) => (
 
 const Navbar = () => {
 	const {
+		user,
 		setActiveMenu,
 		isClicked,
 		handleClick,
